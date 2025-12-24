@@ -78,7 +78,7 @@ export default function ServicesEquinoz() {
         <div className="grid lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4" data-aos="fade-right" data-aos-delay="100">
             <div className="sticky top-24 space-y-2">
-              {services.map((service, index) => (
+              {services.map((service) => (
                 <button
                   key={service.id}
                   onClick={() => setActiveService(service.id)}
@@ -87,8 +87,6 @@ export default function ServicesEquinoz() {
                       ? 'bg-dark text-white shadow-lg shadow-dark/20'
                       : 'bg-clay hover:bg-sage/30 text-slate-700'
                   }`}
-                  data-aos="fade-up"
-                  data-aos-delay={150 + index * 50}
                 >
                   <span className="font-semibold block">{service.title}</span>
                   <span className={`text-sm ${activeService === service.id ? 'text-slate-300' : 'text-slate-500'}`}>
@@ -99,32 +97,33 @@ export default function ServicesEquinoz() {
             </div>
           </div>
 
-          <div className="lg:col-span-8" data-aos="fade-left" data-aos-delay="200">
-            {services.map((service) => (
-              <div
-                key={service.id}
-                className={`transition-all duration-500 ${
-                  activeService === service.id ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 hidden'
-                }`}
-              >
-                <div className="bg-clay rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <h3 className="text-2xl font-semibold text-dark mb-2">{service.title}</h3>
-                  <p className="text-slate-600 mb-8">{service.subtitle}</p>
-                  <ul className="space-y-4">
-                    {service.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 group">
-                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-terracotta/20 flex items-center justify-center mt-0.5 group-hover:bg-terracotta group-hover:scale-110 transition-all duration-300">
-                          <svg className="w-3 h-3 text-terracotta group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </span>
-                        <span className="text-slate-700 group-hover:text-dark transition-colors">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+          <div className="lg:col-span-8">
+            {services.map((service) => {
+              const isActive = activeService === service.id
+              return (
+                <div
+                  key={service.id}
+                  className={`transition-all duration-300 ${isActive ? 'block' : 'hidden'}`}
+                >
+                  <div className="bg-clay rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <h3 className="text-2xl font-semibold text-dark mb-2">{service.title}</h3>
+                    <p className="text-slate-600 mb-8">{service.subtitle}</p>
+                    <ul className="space-y-4">
+                      {service.items.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-3 group">
+                          <span className="shrink-0 w-6 h-6 rounded-full bg-terracotta/20 flex items-center justify-center mt-0.5 group-hover:bg-terracotta group-hover:scale-110 transition-all duration-300">
+                            <svg className="w-3 h-3 text-terracotta group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </span>
+                          <span className="text-slate-700 group-hover:text-dark transition-colors">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

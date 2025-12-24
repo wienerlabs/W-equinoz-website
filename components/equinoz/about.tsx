@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function AboutEquinoz() {
   const values = [
     {
@@ -59,23 +61,39 @@ export default function AboutEquinoz() {
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm hover:shadow-lg transition-all duration-300 mb-16" data-aos="fade-up" data-aos-delay="100">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            <div data-aos="fade-right" data-aos-delay="200">
-              <h3 className="text-xl font-semibold text-dark mb-4">Our Mission</h3>
-              <p className="text-slate-600 leading-relaxed">
-                To connect distinguished global families and visionary entrepreneurs with the UAE&apos;s
-                growing opportunity ecosystem through smart structuring, cultural awareness, and
-                absolute confidentiality.
-              </p>
+        <div className="grid lg:grid-cols-5 gap-8 mb-16">
+          <div className="lg:col-span-3 bg-white rounded-2xl p-8 md:p-12 shadow-sm hover:shadow-lg transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+              <div data-aos="fade-right" data-aos-delay="200">
+                <h3 className="text-xl font-semibold text-dark mb-4">Our Mission</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  To connect distinguished global families and visionary entrepreneurs with the UAE&apos;s
+                  growing opportunity ecosystem through smart structuring, cultural awareness, and
+                  absolute confidentiality.
+                </p>
+              </div>
+              <div data-aos="fade-left" data-aos-delay="300">
+                <h3 className="text-xl font-semibold text-dark mb-4">Our Philosophy</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  A balance point where strategy meets precision, and clarity meets intention. EQUINOZ
+                  is not just a consultant, but a <em>transition partner</em> — ensuring growth, relocation,
+                  and investment decisions are executed with foresight, stability, and integrity.
+                </p>
+              </div>
             </div>
-            <div data-aos="fade-left" data-aos-delay="300">
-              <h3 className="text-xl font-semibold text-dark mb-4">Our Philosophy</h3>
-              <p className="text-slate-600 leading-relaxed">
-                A balance point where strategy meets precision, and clarity meets intention. EQUINOZ
-                is not just a consultant, but a <em>transition partner</em> — ensuring growth, relocation,
-                and investment decisions are executed with foresight, stability, and integrity.
-              </p>
+          </div>
+
+          <div className="lg:col-span-2 relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 min-h-[280px]" data-aos="fade-left" data-aos-delay="200">
+            <Image
+              src="/images/dubai-2.avif"
+              alt="Dubai Business District"
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-dark/60 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <p className="text-white text-sm font-medium">Dubai, UAE</p>
+              <p className="text-white/70 text-xs">Gateway to Global Opportunities</p>
             </div>
           </div>
         </div>

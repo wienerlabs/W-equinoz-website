@@ -15,8 +15,8 @@ export default function Header({ mode = 'dark' }: { mode?: 'dark' | 'light' }) {
             <Logo variant={isLight ? 'light' : 'dark'} />
           </div>
 
-          <nav className="hidden md:flex md:grow">
-            <ul className="flex grow justify-center flex-wrap items-center gap-1">
+          <nav className="hidden md:flex md:grow justify-center">
+            <ul className="flex items-center gap-1">
               <li>
                 <a href="#about" className={`${linkClass} px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out`}>About</a>
               </li>
@@ -30,19 +30,17 @@ export default function Header({ mode = 'dark' }: { mode?: 'dark' | 'light' }) {
                 <a href="#contact" className={`${linkClass} px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out`}>Contact</a>
               </li>
             </ul>
-
-            <ul className="flex grow justify-end flex-wrap items-center">
-              <li>
-                <a
-                  href="#contact"
-                  className={`font-semibold ${isLight ? 'bg-[#b55d3b] text-white hover:bg-[#944a2e]' : 'bg-[#0E2725] text-white hover:bg-[#1a3d3a]'} px-5 py-2 rounded-md flex items-center transition duration-150 ease-in-out group`}
-                >
-                  Start the Conversation
-                  <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-2">→</span>
-                </a>
-              </li>
-            </ul>
           </nav>
+
+          <div className="hidden md:flex items-center">
+            <a
+              href="#contact"
+              className={`font-semibold ${isLight ? 'bg-[#b55d3b] text-white hover:bg-[#944a2e]' : 'bg-[#0E2725] text-white hover:bg-[#1a3d3a]'} px-5 py-2 rounded-md flex items-center transition duration-150 ease-in-out group`}
+            >
+              Start the Conversation
+              <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-2">→</span>
+            </a>
+          </div>
 
           <MobileMenu mode={mode} />
         </div>

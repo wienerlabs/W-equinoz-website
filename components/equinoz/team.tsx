@@ -51,11 +51,19 @@ type PersonCardProps = {
 }
 
 function PersonCard({ name, role, company, linkedin, image }: PersonCardProps) {
+  const isRamazan = name === 'Ramazan Manzak'
+
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-center group">
       <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden ring-2 ring-terracotta/20 group-hover:ring-terracotta/50 transition-all duration-300">
         {image ? (
-          <Image src={image} alt={name} width={96} height={96} className="w-full h-full object-cover" />
+          <Image
+            src={image}
+            alt={name}
+            width={96}
+            height={96}
+            className={`w-full h-full object-cover ${isRamazan ? 'object-top' : 'object-center'}`}
+          />
         ) : (
           <div className="w-full h-full bg-linear-to-br from-terracotta to-terracotta-dark flex items-center justify-center text-white text-2xl font-semibold">
             {name.split(' ').map(n => n[0]).join('')}
