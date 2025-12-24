@@ -16,13 +16,26 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-slate-900: #101d2d;
+  /* EQUINOZ Brand Colors */
+  --color-terracotta: #b55d3b;
+  --color-terracotta-light: #c97a5c;
+  --color-terracotta-dark: #944a2e;
+  --color-sage: #9EB5A4;
+  --color-sage-light: #b5c9ba;
+  --color-clay: #DED5D1;
+  --color-teal: #008080;
+  --color-teal-light: #1a9999;
+  --color-teal-dark: #006666;
+  --color-dark: #0E2725;
+  --color-bronze: #A7713F;
 
-  --color-blue-500: #5696ff;
-  --color-blue-600: #2174ea;
+  --color-slate-900: #0E2725;
 
-  --font-inter: Inter, sans-serif;
-  --font-playfair-display: Playfair Display, serif;
+  --color-blue-500: #008080;
+  --color-blue-600: #006666;
+
+  --font-mukta-mahee: 'Mukta Mahee', sans-serif;
+  --font-playfair-display: 'Playfair Display', serif;
 
   --text-xs: 0.75rem;
   --text-xs--line-height: 1.5;

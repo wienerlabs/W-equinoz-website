@@ -1,66 +1,50 @@
-import Link from 'next/link'
 import Logo from './logo'
-import Dropdown from '@/components/utils/dropdown'
 import MobileMenu from './mobile-menu'
 
-export default function Header({ mode = 'dark' }: {
-  mode?: string
-}) {
+export default function Header({ mode = 'dark' }: { mode?: 'dark' | 'light' }) {
+  const isLight = mode === 'light'
+  const linkClass = isLight
+    ? 'font-medium text-white/80 hover:text-white'
+    : 'font-medium text-slate-700 hover:text-[#b55d3b]'
+
   return (
-    <header className={`absolute w-full z-30 ${mode !== 'light' && 'dark'}`}>
+    <header className={`absolute w-full z-30 ${!isLight && 'dark'}`}>
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
-
-          {/* Site branding */}
           <div className="shrink-0 mr-4">
-            <Logo />
+            <Logo variant={isLight ? 'light' : 'dark'} />
           </div>
 
-          {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow">
-
-            {/* Desktop menu links */}
-            <ul className="flex grow justify-start flex-wrap items-center">
+            <ul className="flex grow justify-center flex-wrap items-center gap-1">
               <li>
-                <Link href="/pricing" className="font-medium text-slate-800 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-600 px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out">Pricing</Link>
+                <a href="#about" className={`${linkClass} px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out`}>About</a>
               </li>
               <li>
-                <Link href="/about" className="font-medium text-slate-800 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-600 px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out">About</Link>
+                <a href="#services" className={`${linkClass} px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out`}>Services</a>
               </li>
               <li>
-                <Link href="/blog" className="font-medium text-slate-800 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-600 px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out">Blog</Link>
+                <a href="#team" className={`${linkClass} px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out`}>Team</a>
               </li>
               <li>
-                <Link href="/wall-of-love" className="font-medium text-slate-800 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-600 px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out">Wall of Love</Link>
+                <a href="#contact" className={`${linkClass} px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out`}>Contact</a>
               </li>
-              {/* 1st level: hover */}
-              <Dropdown title="Resources">
-                {/* 2nd level: hover */}
-                <li>
-                  <Link href="/404" className="font-medium text-sm text-gray-600 hover:text-blue-600 flex py-2 px-5 leading-tight">404</Link>
-                </li>
-                <li>
-                  <Link href="/support" className="font-medium text-sm text-gray-600 hover:text-blue-600 flex py-2 px-5 leading-tight">Support</Link>
-                </li>
-              </Dropdown>
             </ul>
 
-            {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
-                <Link href="/signin" className="font-medium text-slate-800 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-600 px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out">Sign in</Link>
-              </li>
-              <li>
-                <Link href="/request-demo" className="font-medium text-blue-600 dark:text-slate-300 dark:hover:text-white px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out group">
-                  Request Demo <span className="tracking-normal text-blue-600 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-                </Link>
+                <a
+                  href="#contact"
+                  className={`font-semibold ${isLight ? 'bg-[#b55d3b] text-white hover:bg-[#944a2e]' : 'bg-[#0E2725] text-white hover:bg-[#1a3d3a]'} px-5 py-2 rounded-md flex items-center transition duration-150 ease-in-out group`}
+                >
+                  Start the Conversation
+                  <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-2">→</span>
+                </a>
               </li>
             </ul>
-
           </nav>
 
-          <MobileMenu />
-
+          <MobileMenu mode={mode} />
         </div>
       </div>
     </header>
