@@ -1,11 +1,25 @@
+import Image from 'next/image'
+
 export default function HeroEquinoz() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-dark pointer-events-none -z-10" aria-hidden="true">
-        <div className="absolute inset-0 bg-linear-to-br from-dark via-dark to-teal-dark/30 opacity-90" />
+      {/* Dubai Background Image */}
+      <div className="absolute inset-0 -z-20">
+        <Image
+          src="/images/dubai.avif"
+          alt="Dubai Skyline"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+      </div>
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-dark/75 pointer-events-none -z-10" aria-hidden="true">
+        <div className="absolute inset-0 bg-linear-to-br from-dark/90 via-dark/70 to-teal-dark/40" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-dark to-transparent" />
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-terracotta/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-teal/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/4 right-0 w-96 h-96 bg-terracotta/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-teal/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full">
