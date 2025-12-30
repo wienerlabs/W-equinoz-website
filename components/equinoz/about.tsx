@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import ScrollArrow from '@/components/ui/scroll-arrow'
 
 export default function AboutEquinoz() {
   const values = [
@@ -22,7 +23,7 @@ export default function AboutEquinoz() {
     },
     {
       title: 'Confidentiality',
-      description: 'Privacy is not a promise — it is a principle.',
+      description: 'Privacy is not a promise. It is a principle.',
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -54,10 +55,9 @@ export default function AboutEquinoz() {
             The Balance Between Opportunity & Stability
           </h2>
           <p className="text-lg text-slate-600 leading-relaxed">
-            EQUINOZ was founded on the principle of <em>Equilibrium</em> — the balance between opportunity
-            and stability, the cornerstone of lasting success. With over 15 years of global experience
-            and deep understanding of the UAE&apos;s dynamics, we guide distinguished families and
-            entrepreneurs through growth, settlement, and transition processes.
+            EQUINOZ was founded on the principle of <span className="font-bold text-terracotta">Equilibrium</span>, the balance between opportunity
+            and stability, the cornerstone of lasting success. With over <span className="font-bold text-terracotta">15 years of global experience</span> and deep understanding of the UAE&apos;s dynamics, we guide <span className="font-bold text-terracotta">distinguished families and
+            entrepreneurs</span> through growth, settlement, and transition processes.
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function AboutEquinoz() {
                 <h3 className="text-xl font-semibold text-dark mb-4">Our Philosophy</h3>
                 <p className="text-slate-600 leading-relaxed">
                   A balance point where strategy meets precision, and clarity meets intention. EQUINOZ
-                  is not just a consultant, but a <em>transition partner</em> — ensuring growth, relocation,
+                  is not just a consultant, but a <em>transition partner</em>, ensuring growth, relocation,
                   and investment decisions are executed with foresight, stability, and integrity.
                 </p>
               </div>
@@ -113,6 +113,10 @@ export default function AboutEquinoz() {
               <p className="text-slate-600 text-sm">{value.description}</p>
             </div>
           ))}
+        </div>
+
+        <div className="flex justify-center mt-16" data-aos="fade-up" data-aos-delay="400">
+          <ScrollArrow targetId="services" />
         </div>
       </div>
     </section>

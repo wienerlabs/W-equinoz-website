@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import ScrollArrow from '@/components/ui/scroll-arrow'
 
 const services = [
   {
@@ -23,7 +24,7 @@ const services = [
       'Curated access to verified opportunities (real estate, healthcare, tech, industrial)',
       'Strategic introductions to key stakeholders',
       'Due diligence support and structuring guidance',
-      'Note: We do not manage capital — we build relationships, provide access, context, and structure',
+      'Note: We do not manage capital. We build relationships, provide access, context, and structure.',
     ],
   },
   {
@@ -69,9 +70,9 @@ export default function ServicesEquinoz() {
             End-to-End Solutions for Families & Founders
           </h2>
           <p className="text-lg text-slate-600">
-            EQUINOZ operates at the intersection of strategy, establishment, and opportunity —
-            providing comprehensive solutions for those seeking to create a secure, structured,
-            and meaningful presence in the UAE and beyond.
+            <span className="font-bold text-terracotta">EQUINOZ</span> operates at the intersection of <span className="font-bold text-terracotta">strategy</span>, <span className="font-bold text-terracotta">establishment</span>, and <span className="font-bold text-terracotta">opportunity</span>,
+            providing comprehensive solutions for those seeking to create a <span className="font-bold text-terracotta">secure</span>, <span className="font-bold text-terracotta">structured</span>,
+            and <span className="font-bold text-terracotta">meaningful</span> presence in the UAE and beyond.
           </p>
         </div>
 
@@ -88,7 +89,7 @@ export default function ServicesEquinoz() {
                       : 'bg-clay hover:bg-sage/30 text-slate-700'
                   }`}
                 >
-                  <span className="font-semibold block">{service.title}</span>
+                  <span className="font-bold text-teal block">{service.title}</span>
                   <span className={`text-sm ${activeService === service.id ? 'text-slate-300' : 'text-slate-500'}`}>
                     {service.subtitle}
                   </span>
@@ -125,6 +126,10 @@ export default function ServicesEquinoz() {
               )
             })}
           </div>
+        </div>
+
+        <div className="flex justify-center mt-16" data-aos="fade-up" data-aos-delay="300">
+          <ScrollArrow targetId="team" />
         </div>
       </div>
     </section>

@@ -37,8 +37,8 @@ export default function HeroEquinoz() {
             </h1>
 
             <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="300">
-              EQUINOZ is a Dubai-based private-client advisory firm — guiding HNW and UHNW families
-              toward secure, meaningful, and strategic establishment in the UAE and beyond.
+              <span className="font-bold text-terracotta">EQUINOZ</span> is a Dubai-based private-client advisory firm, guiding HNW and UHNW families
+              toward <span className="font-bold text-terracotta">secure</span>, <span className="font-bold text-terracotta">meaningful</span>, and strategic establishment in the UAE and beyond.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
@@ -92,10 +92,10 @@ export default function HeroEquinoz() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <a href="#about" className="text-white/50 hover:text-white transition animate-bounce">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
+        <a href="#about" className="text-white/50 hover:text-white transition animate-bounce block">
+          <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </a>
       </div>

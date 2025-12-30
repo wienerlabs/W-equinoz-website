@@ -27,23 +27,55 @@ export default function MobileMenu({ mode = 'dark' }: { mode?: 'dark' | 'light' 
     return () => document.removeEventListener('keydown', keyHandler)
   })
 
+  useEffect(() => {
+    if (mobileNavOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileNavOpen])
+
   const isLight = mode === 'light'
+
+  const navLinks = [
+    { href: '#about', label: 'About', icon: '◆' },
+    { href: '#services', label: 'Services', icon: '◆' },
+    { href: '#team', label: 'Team', icon: '◆' },
+    { href: '#contact', label: 'Contact', icon: '◆' },
+  ]
 
   return (
     <div className="flex md:hidden">
       <button
         ref={trigger}
-        className={`group inline-flex w-8 h-8 ${isLight ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-slate-800'} text-center items-center justify-center transition`}
+        className={`group relative z-50 inline-flex w-10 h-10 rounded-lg ${
+          isLight ? 'text-white/90 hover:text-white' : 'text-slate-700 hover:text-dark'
+        } ${mobileNavOpen ? 'bg-terracotta text-white' : ''} items-center justify-center transition-all duration-300`}
         aria-controls="mobile-nav"
         aria-expanded={mobileNavOpen}
         onClick={() => setMobileNavOpen(!mobileNavOpen)}
       >
         <span className="sr-only">Menu</span>
-        <svg className="w-5 h-5 fill-current pointer-events-none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-          <rect className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] -translate-y-[5px] group-aria-expanded:rotate-[315deg] group-aria-expanded:translate-y-0" y="7" width="16" height="2" rx="1" />
-          <rect className="origin-center group-aria-expanded:rotate-45 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)]" y="7" width="16" height="2" rx="1" />
-          <rect className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] translate-y-[5px] group-aria-expanded:rotate-[135deg] group-aria-expanded:translate-y-0" y="7" width="16" height="2" rx="1" />
-        </svg>
+        <div className="flex flex-col gap-1.5 w-5">
+          <span
+            className={`block h-0.5 rounded-full transition-all duration-300 ${
+              mobileNavOpen ? 'bg-white rotate-45 translate-y-2' : isLight ? 'bg-white' : 'bg-current'
+            }`}
+          />
+          <span
+            className={`block h-0.5 rounded-full transition-all duration-300 ${
+              mobileNavOpen ? 'bg-white opacity-0 scale-0' : isLight ? 'bg-white' : 'bg-current'
+            }`}
+          />
+          <span
+            className={`block h-0.5 rounded-full transition-all duration-300 ${
+              mobileNavOpen ? 'bg-white -rotate-45 -translate-y-2' : isLight ? 'bg-white' : 'bg-current'
+            }`}
+          />
+        </div>
       </button>
 
       <div ref={mobileNav}>
@@ -51,32 +83,63 @@ export default function MobileMenu({ mode = 'dark' }: { mode?: 'dark' | 'light' 
           show={mobileNavOpen}
           as="nav"
           id="mobile-nav"
-          className="absolute top-full h-screen pb-16 z-20 left-0 w-full overflow-scroll bg-white transform transition ease-out duration-200 data-enter:data-closed:-translate-y-2 data-closed:opacity-0"
+          className="fixed inset-0 z-40 bg-gradient-to-b from-dark via-dark to-teal overflow-auto"
+          enter="transition-all duration-500 ease-out"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-all duration-300 ease-in"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
         >
-          <ul className="px-5 py-4">
-            <li>
-              <a href="#about" className="flex font-medium text-slate-800 hover:text-terracotta py-3" onClick={() => setMobileNavOpen(false)}>About</a>
-            </li>
-            <li>
-              <a href="#services" className="flex font-medium text-slate-800 hover:text-terracotta py-3" onClick={() => setMobileNavOpen(false)}>Services</a>
-            </li>
-            <li>
-              <a href="#team" className="flex font-medium text-slate-800 hover:text-terracotta py-3" onClick={() => setMobileNavOpen(false)}>Team</a>
-            </li>
-            <li>
-              <a href="#contact" className="flex font-medium text-slate-800 hover:text-terracotta py-3" onClick={() => setMobileNavOpen(false)}>Contact</a>
-            </li>
-            <li className="pt-4 mt-4 border-t border-gray-200">
+          <div className="min-h-screen flex flex-col justify-center px-8 py-20">
+            <ul className="space-y-2">
+              {navLinks.map((link, idx) => (
+                <li
+                  key={link.href}
+                  className="overflow-hidden"
+                  style={{ animationDelay: `${idx * 100}ms` }}
+                >
+                  <a
+                    href={link.href}
+                    className="group flex items-center gap-4 py-4 text-3xl font-playfair-display text-white/90 hover:text-terracotta transition-all duration-300"
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    <span className="text-terracotta text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {link.icon}
+                    </span>
+                    <span className="group-hover:translate-x-2 transition-transform duration-300">
+                      {link.label}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-12 pt-8 border-t border-white/10">
               <a
                 href="#contact"
-                className="flex font-semibold text-white bg-terracotta hover:bg-terracotta-dark py-3 px-4 rounded-md justify-center group"
+                className="group flex items-center justify-center gap-3 w-full py-4 px-6 rounded-full bg-gradient-to-r from-terracotta to-terracotta-dark text-white font-semibold text-lg shadow-lg shadow-terracotta/30 hover:scale-105 transition-all duration-300"
                 onClick={() => setMobileNavOpen(false)}
               >
                 Start the Conversation
-                <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-2">→</span>
+                <svg
+                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </a>
-            </li>
-          </ul>
+            </div>
+
+            <div className="mt-auto pt-12 text-center">
+              <p className="text-white/40 text-sm">
+                © 2025 EQUINOZ LLC FZ
+              </p>
+            </div>
+          </div>
         </Transition>
       </div>
     </div>

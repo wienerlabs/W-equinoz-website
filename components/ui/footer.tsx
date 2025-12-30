@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -8,12 +9,16 @@ export default function Footer() {
           <div className="grid md:grid-cols-12 gap-8 lg:gap-12">
             <div className="md:col-span-4">
               <Link href="/" className="inline-block mb-4" aria-label="EQUINOZ">
-                <span className="text-2xl font-bold tracking-wider text-white">
-                  EQUIN<span className="text-terracotta">O</span>Z
-                </span>
+                <Image
+                  src="/images/logo2.png"
+                  alt="EQUINOZ"
+                  width={960}
+                  height={270}
+                  className="h-56 w-auto"
+                />
               </Link>
               <p className="text-slate-400 text-sm mb-6">
-                Rooted in the principle of Equilibrium — the balance between opportunity and stability.
+                Rooted in the principle of Equilibrium, the balance between opportunity and stability.
               </p>
               <div className="text-sm text-slate-400 space-y-1">
                 <p>Dubai, United Arab Emirates</p>
@@ -98,7 +103,7 @@ export default function Footer() {
 
         <div className="py-6 border-t border-slate-700/50">
           <div className="text-center text-sm text-slate-500">
-            © {new Date().getFullYear()} EQUINOZ Global. All rights reserved.
+            © 2025 EQUINOZ LLC FZ. All Rights Reserved.
           </div>
         </div>
       </div>

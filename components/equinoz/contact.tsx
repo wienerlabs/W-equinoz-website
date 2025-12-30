@@ -40,7 +40,7 @@ export default function ContactEquinoz() {
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
               Whether you are exploring establishment in the UAE, seeking strategic partnership,
-              or preparing for regional expansion — EQUINOZ offers confidential guidance tailored
+              or preparing for regional expansion, EQUINOZ offers confidential guidance tailored
               to your objectives.
             </p>
             <p className="text-slate-400 italic mb-10">

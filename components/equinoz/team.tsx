@@ -1,15 +1,16 @@
 import Image from 'next/image'
+import ScrollArrow from '@/components/ui/scroll-arrow'
 
 const founders = [
   {
     name: 'Ramazan Manzak',
-    role: 'Co-Founder',
+    role: 'Co-Founder & Director, Business Development',
     linkedin: 'https://www.linkedin.com/in/ramazan-manzak-71851b183/',
     image: '/images/Ramazan.jpeg',
   },
   {
     name: 'Melissa Özkara',
-    role: 'Co-Founder',
+    role: 'Co-Founder & Managing Director',
     linkedin: 'https://www.linkedin.com/in/melissa-%C3%B6zkara-03097542',
     image: null,
   },
@@ -17,30 +18,30 @@ const founders = [
 
 const team = [
   {
-    name: 'Selen Tunalı',
-    role: 'Head of Education',
-    company: 'EQUINOZ',
+    name: 'Dr. Selen Tunalı Butgel',
+    role: 'Director, Education Pathways',
     linkedin: 'https://www.linkedin.com/in/selen-butgel-tunali-69468346',
     image: '/images/selen-tunalı-equinox.jpeg',
   },
 ]
 
-const partners = [
-  {
-    name: 'Hamdan Al Shamsi',
-    role: 'Legal Partner',
-    company: 'HAS LAW, Business Bay',
-    linkedin: 'https://www.linkedin.com/in/hamdan-alshamsi-4314b0129',
-    image: '/images/hamdan-equinox.jpeg',
-  },
-  {
-    name: 'Yaşar Aksanoğlu',
-    role: 'Legal Partner',
-    company: 'Aksan Hukuk / Galle Consulting, Istanbul',
-    linkedin: 'https://www.linkedin.com/in/ya%C5%9Far-aksano%C4%9Flu-01308b61',
-    image: '/images/Yaşar-aksu-equinox.jpeg',
-  },
-]
+// Legal Partners - commented out for now
+// const legalPartners = [
+//   {
+//     name: 'Hamdan Al Shamsi',
+//     role: 'Legal Partner',
+//     company: 'HAS LAW, Business Bay',
+//     linkedin: 'https://www.linkedin.com/in/hamdan-alshamsi-4314b0129',
+//     image: '/images/hamdan-equinox.jpeg',
+//   },
+//   {
+//     name: 'Yaşar Aksanoğlu',
+//     role: 'Legal Partner',
+//     company: 'Aksan Hukuk / Galle Consulting, Istanbul',
+//     linkedin: 'https://www.linkedin.com/in/ya%C5%9Far-aksano%C4%9Flu-01308b61',
+//     image: '/images/Yaşar-aksu-equinox.jpeg',
+//   },
+// ]
 
 type PersonCardProps = {
   name: string
@@ -102,11 +103,11 @@ export default function TeamEquinoz() {
             Our Team
           </span>
           <h2 className="text-3xl md:text-4xl font-playfair-display text-dark mb-6">
-            Leadership & Partners
+            Leadership
           </h2>
           <p className="text-lg text-slate-600">
             Our team combines decades of international experience with deep local expertise,
-            supported by a trusted network of legal and strategic partners.
+            supported by a trusted network of legal partners.
           </p>
         </div>
 
@@ -132,15 +133,20 @@ export default function TeamEquinoz() {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-center text-sm font-semibold text-terracotta uppercase tracking-wider mb-8" data-aos="fade-up" data-aos-delay="300">Strategic Partners</h3>
+        {/* Legal Partners - commented out for now */}
+        {/* <div>
+          <h3 className="text-center text-sm font-semibold text-terracotta uppercase tracking-wider mb-8" data-aos="fade-up" data-aos-delay="300">Legal Partners</h3>
           <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {partners.map((person, idx) => (
+            {legalPartners.map((person, idx) => (
               <div key={idx} data-aos="zoom-in" data-aos-delay={350 + idx * 100}>
                 <PersonCard {...person} />
               </div>
             ))}
           </div>
+        </div> */}
+
+        <div className="flex justify-center mt-16" data-aos="fade-up" data-aos-delay="400">
+          <ScrollArrow targetId="contact" />
         </div>
       </div>
     </section>
