@@ -19,6 +19,10 @@ export const metadata = {
   title: 'EQUINOZ Global | Private Client Advisory',
   description: 'Dubai-based private-client advisory firm guiding HNW and UHNW families toward secure, meaningful, and strategic establishment in the UAE and beyond.',
   keywords: 'family office, golden visa, UAE, Dubai, private client advisory, investment, HNW, UHNW',
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({
