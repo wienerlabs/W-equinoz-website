@@ -16,15 +16,6 @@ const founders = [
   },
 ]
 
-const team = [
-  {
-    name: 'Dr. Selen Tunalı Butgel',
-    role: 'Director, Education Pathways',
-    linkedin: 'https://www.linkedin.com/in/selen-butgel-tunali-69468346',
-    image: '/images/selen-tunalı-equinox.jpeg',
-  },
-]
-
 // Legal Partners - commented out for now
 // const legalPartners = [
 //   {
@@ -116,17 +107,6 @@ export default function TeamEquinoz() {
           <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {founders.map((person, idx) => (
               <div key={idx} data-aos="zoom-in" data-aos-delay={150 + idx * 100}>
-                <PersonCard {...person} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <h3 className="text-center text-sm font-semibold text-terracotta uppercase tracking-wider mb-8" data-aos="fade-up" data-aos-delay="200">Team</h3>
-          <div className="grid sm:grid-cols-1 gap-6 max-w-sm mx-auto">
-            {team.map((person, idx) => (
-              <div key={idx} data-aos="zoom-in" data-aos-delay={250 + idx * 100}>
                 <PersonCard {...person} />
               </div>
             ))}
