@@ -4,7 +4,7 @@ import ScrollArrow from '@/components/ui/scroll-arrow'
 const founders = [
   {
     name: 'Ramazan Manzak',
-    role: 'Co-Founder & Director, Business Development',
+    role: 'Founder & Managing Director',
     linkedin: 'https://www.linkedin.com/in/ramazan-manzak-71851b183/',
     image: '/images/Ramazan.jpeg',
   },
@@ -97,7 +97,7 @@ export default function TeamEquinoz() {
         </div>
 
         <div className="mb-16">
-          <h3 className="text-center text-sm font-semibold text-terracotta uppercase tracking-wider mb-8" data-aos="fade-up" data-aos-delay="100">Founders</h3>
+          <h3 className="text-center text-sm font-semibold text-terracotta uppercase tracking-wider mb-8" data-aos="fade-up" data-aos-delay="100">Founder</h3>
           <div className="grid gap-6 max-w-sm mx-auto">
             {founders.map((person, idx) => (
               <div key={idx} data-aos="zoom-in" data-aos-delay={150 + idx * 100}>
