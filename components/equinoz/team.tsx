@@ -8,12 +8,6 @@ const founders = [
     linkedin: 'https://www.linkedin.com/in/ramazan-manzak-71851b183/',
     image: '/images/Ramazan.jpeg',
   },
-  {
-    name: 'Melissa Özkara',
-    role: 'Co-Founder & Managing Director',
-    linkedin: 'https://www.linkedin.com/in/melissa-%C3%B6zkara-03097542',
-    image: null,
-  },
 ]
 
 // Legal Partners - commented out for now
@@ -104,7 +98,7 @@ export default function TeamEquinoz() {
 
         <div className="mb-16">
           <h3 className="text-center text-sm font-semibold text-terracotta uppercase tracking-wider mb-8" data-aos="fade-up" data-aos-delay="100">Founders</h3>
-          <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <div className="grid gap-6 max-w-sm mx-auto">
             {founders.map((person, idx) => (
               <div key={idx} data-aos="zoom-in" data-aos-delay={150 + idx * 100}>
                 <PersonCard {...person} />
