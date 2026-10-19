@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Consult from '@/components/consult'
+import FaqSection from '@/components/faq'
+import Approach from '@/components/home/approach'
 import JsonLd from '@/components/json-ld'
 import LightHero from '@/components/light-hero'
 import LightLabel from '@/components/light-label'
 import OtherLights from '@/components/other-lights'
+import TodayLight from '@/components/today-light'
 import type { Brand } from '@/lib/content/brands'
-import { home } from '@/lib/content/home'
+import { brandFaq } from '@/lib/content/faq'
 import { serviceByRoute } from '@/lib/content/services'
 import { ui } from '@/lib/content/ui'
 import { href, type Lang } from '@/lib/i18n'
@@ -26,9 +29,8 @@ export default function BrandPage({ brand, lang }: { brand: Brand; lang: Lang })
         ]}
       />
       <LightHero
-        image={brand.image}
+        clip={brand.clip}
         alt={brand.imageAlt[lang]}
-        focus={brand.focus}
         glow={brand.light.glow}
         eyebrow={<LightLabel brand={brand} lang={lang} />}
         title={brand.headline[lang]}
@@ -38,11 +40,14 @@ export default function BrandPage({ brand, lang }: { brand: Brand; lang: Lang })
 
       <section data-theme="light" className="bg-sand text-ink">
         <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-28 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-36">
-          <p className="eyebrow text-ink/55 lg:col-span-3" data-reveal>
-            {brand.name}
-            <br />
-            <span className="text-ink/40">{ui.byEquinoz}</span>
-          </p>
+          <div className="lg:col-span-3">
+            <p className="eyebrow text-ink/55" data-reveal>
+              {brand.name}
+              <br />
+              <span className="text-ink/40">{ui.byEquinoz}</span>
+            </p>
+            <TodayLight brand={brand} lang={lang} />
+          </div>
           <div className="lg:col-span-8 lg:col-start-5">
             <p data-illuminate className="font-display text-[clamp(1.6rem,3vw,2.7rem)] leading-[1.22]">
               {lead[lang]}
@@ -131,28 +136,8 @@ export default function BrandPage({ brand, lang }: { brand: Brand; lang: Lang })
         </div>
       </section>
 
-      <section data-theme="light" aria-labelledby="brand-approach-title" className="bg-clay text-ink">
-        <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
-          <p className="eyebrow mb-6 text-ink/55" data-reveal>
-            {home.approach.eyebrow[lang]}
-          </p>
-          <h2 id="brand-approach-title" data-split className="max-w-[20ch] text-[clamp(2.2rem,4.4vw,4.2rem)] leading-[0.98] tracking-[-0.03em]">
-            {home.approach.title[lang]}
-          </h2>
-          <ol className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
-            {home.approach.steps.map((step, index) => (
-              <li key={step.title.en} data-reveal className="border-t border-ink/20 pt-6">
-                <span className="font-display text-sm" style={{ color: brand.light.accent }}>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="mt-3 text-[1.45rem] leading-tight">{step.title[lang]}</h3>
-                <p className="mt-3 text-ink/70">{step.text[lang]}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
+      <Approach lang={lang} accent={brand.light.accent} />
+      <FaqSection items={brandFaq[brand.key]} lang={lang} accent={brand.light.accent} />
       <Consult lang={lang} routeKey={brand.route} service={brand.key} />
       <OtherLights lang={lang} current={brand.key} />
     </>

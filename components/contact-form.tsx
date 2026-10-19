@@ -6,6 +6,7 @@ import { ui } from '@/lib/content/ui'
 import type { ServiceGroup } from '@/lib/content/options'
 import type { Lang } from '@/lib/i18n'
 import { mailtoLink, whatsappLink } from '@/lib/site'
+import WhatsappMark from '@/components/whatsapp-mark'
 
 export type CountryOption = { code: string; name: string; dial: string }
 
@@ -148,8 +149,9 @@ export default function ContactForm({
             href={whatsappLink(fallback)}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-sand px-6 py-3.5 text-[0.9375rem] text-ink transition-colors hover:bg-ember"
+            className="inline-flex items-center gap-2.5 rounded-full bg-sand px-6 py-3.5 text-[0.9375rem] text-ink transition-colors hover:bg-ember"
           >
+            <WhatsappMark />
             {ui.whatsapp[lang]}
           </a>
           <a

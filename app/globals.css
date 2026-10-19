@@ -12,8 +12,9 @@
   --color-bronze: #a7713f;
   --color-rose: #e9b7b0;
 
-  --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
-  --font-sans: var(--font-mukta), 'Mukta Mahee', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sora), 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-sora), 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
@@ -30,6 +31,7 @@
     color: var(--color-sand);
     font-family: var(--font-sans);
     font-weight: 300;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -48,14 +50,25 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-weight: 300;
+    letter-spacing: -0.045em;
     text-wrap: balance;
   }
 
   p {
     text-wrap: pretty;
   }
+}
+
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
 
 html.lenis,
@@ -158,21 +171,45 @@ html:not(.js) .light-panel,
 .grain::after {
   content: '';
   position: fixed;
-  inset: -50%;
+  inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 1.2s steps(6) infinite;
 }
 
-@keyframes grain {
-  0% { transform: translate(0, 0); }
-  20% { transform: translate(-3%, 2%); }
-  40% { transform: translate(2%, -3%); }
-  60% { transform: translate(-2%, -1%); }
-  80% { transform: translate(3%, 3%); }
-  100% { transform: translate(0, 0); }
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.9), transparent 60%),
+    radial-gradient(1px 1px at 27% 8%, rgba(255, 255, 255, 0.7), transparent 60%),
+    radial-gradient(1.5px 1.5px at 41% 26%, rgba(255, 255, 255, 0.85), transparent 60%),
+    radial-gradient(1px 1px at 58% 12%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 66% 31%, rgba(255, 255, 255, 0.75), transparent 60%),
+    radial-gradient(1.5px 1.5px at 79% 9%, rgba(255, 255, 255, 0.9), transparent 60%),
+    radial-gradient(1px 1px at 88% 22%, rgba(255, 255, 255, 0.65), transparent 60%),
+    radial-gradient(1px 1px at 6% 34%, rgba(255, 255, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 35% 40%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 72% 44%, rgba(255, 255, 255, 0.45), transparent 60%);
+}
+
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 .intro {
@@ -191,11 +228,42 @@ html:not(.js) .light-panel,
   }
 }
 
+.values[data-staged] .value-row {
+  opacity: 0.18;
+}
+
+.values[data-staged] .value-row[data-active] {
+  opacity: 1;
+}
+
+.flow[data-staged] .flow-step:not([data-on]) {
+  opacity: 0.35;
+}
+
+.flow-step[data-on] .flow-node {
+  border-color: var(--color-terracotta);
+  background: var(--color-terracotta);
+}
+
+.section-nav {
+  transition: top 0.7s var(--ease-expo);
+}
+
+html:not([data-header-hidden]) .section-nav {
+  top: 4.5rem;
+}
+
+@media (min-width: 1024px) {
+  html:not([data-header-hidden]) .section-nav {
+    top: 5rem;
+  }
+}
+
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 400;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .link-line {
@@ -217,7 +285,7 @@ html:not(.js) .light-panel,
   border-bottom: 1px solid color-mix(in oklab, currentColor 28%, transparent);
   background: transparent;
   padding: 0.85rem 0 0.75rem;
-  font-size: 1.0625rem;
+  font-size: 1rem;
   color: inherit;
   border-radius: 0;
   transition: border-color 0.4s var(--ease-expo);
@@ -246,5 +314,13 @@ select.field optgroup {
 }
 
 .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
   display: none;
 }

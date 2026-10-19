@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import FaqSection from '@/components/faq'
 import Approach from '@/components/home/approach'
+import DubaiToday from '@/components/home/dubai-today'
 import Equinox from '@/components/home/equinox'
 import FourLights from '@/components/home/four-lights'
 import GlobalFocus from '@/components/home/global-focus'
@@ -8,6 +10,8 @@ import Leadership from '@/components/home/leadership'
 import NightCta from '@/components/home/night-cta'
 import Roof from '@/components/home/roof'
 import JsonLd from '@/components/json-ld'
+import Marquee from '@/components/marquee'
+import { homeFaq } from '@/lib/content/faq'
 import { home } from '@/lib/content/home'
 import type { Lang } from '@/lib/i18n'
 import { organizationLd, pageMetadata, websiteLd } from '@/lib/seo'
@@ -33,10 +37,13 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
       <Hero lang={lang} />
       <Equinox lang={lang} />
       <Roof lang={lang} />
+      <Marquee items={home.roof.focus.map((item) => item[lang])} />
       <FourLights lang={lang} />
+      <DubaiToday lang={lang} />
       <GlobalFocus lang={lang} />
       <Approach lang={lang} />
       <Leadership lang={lang} />
+      <FaqSection items={homeFaq} lang={lang} />
       <NightCta lang={lang} />
     </>
   )

@@ -5,6 +5,7 @@ import { ui } from '@/lib/content/ui'
 import { countryOptions } from '@/lib/countries'
 import { href, type L, type Lang, type RouteKey } from '@/lib/i18n'
 import { site, whatsappLink } from '@/lib/site'
+import WhatsappMark from '@/components/whatsapp-mark'
 
 export default function Consult({
   lang,
@@ -42,7 +43,13 @@ export default function Consult({
           </p>
           <ul className="mt-10 space-y-4 text-clay/85" data-reveal>
             <li>
-              <a href={whatsappLink(message)} target="_blank" rel="noopener noreferrer" className="link-line text-sand">
+              <a
+                href={whatsappLink(message)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-line inline-flex items-center gap-2.5 text-sand"
+              >
+                <WhatsappMark />
                 {ui.whatsapp[lang]} · {site.whatsapp.display}
               </a>
             </li>

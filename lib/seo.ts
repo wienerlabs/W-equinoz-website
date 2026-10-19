@@ -107,3 +107,16 @@ export function serviceLd(lang: Lang, key: RouteKey, name: string, description: 
     inLanguage: lang,
   }
 }
+
+export function faqLd(items: { question: L; answer: L }[], lang: Lang) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    inLanguage: lang,
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question[lang],
+      acceptedAnswer: { '@type': 'Answer', text: item.answer[lang] },
+    })),
+  }
+}

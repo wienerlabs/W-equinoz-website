@@ -9,6 +9,7 @@ import { ui } from '@/lib/content/ui'
 import { href, keyFromPathname, otherLang, type Lang } from '@/lib/i18n'
 import { gsap, getLenis, useGSAP, whenIntroDone } from '@/lib/motion'
 import { whatsappLink } from '@/lib/site'
+import WhatsappMark from '@/components/whatsapp-mark'
 
 export default function Header({ lang, showPartners }: { lang: Lang; showPartners: boolean }) {
   const pathname = usePathname()
@@ -38,6 +39,10 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    document.documentElement.toggleAttribute('data-header-hidden', hidden && !open)
+  }, [hidden, open])
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1024px)')
@@ -168,7 +173,7 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
               </a>
               <Link
                 href={href('contact', lang)}
-                className={`hidden rounded-full border px-5 py-2.5 text-sm transition-colors duration-500 md:inline-flex ${
+                className={`hidden whitespace-nowrap rounded-full border px-5 py-2.5 text-sm transition-colors duration-500 md:inline-flex ${
                   light && scrolled && !open
                     ? 'border-ink/25 hover:bg-ink hover:text-sand'
                     : 'border-sand/30 hover:bg-sand hover:text-ink'
@@ -256,8 +261,9 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
               target="_blank"
               rel="noopener noreferrer"
               onClick={close}
-              className="menu-item inline-flex w-full items-center justify-center rounded-full border border-sand/30 px-6 py-4"
+              className="menu-item inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-sand/30 px-6 py-4"
             >
+              <WhatsappMark />
               {ui.whatsapp[lang]}
             </a>
           </div>

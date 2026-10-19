@@ -1,15 +1,15 @@
 import type { StaticImageData } from 'next/image'
 import type { L, RouteKey } from '@/lib/i18n'
-import globalSunset from '@/assets/media/global-sunset.jpg'
-import consultingMorning from '@/assets/media/consulting-morning.jpg'
-import accountingNoon from '@/assets/media/accounting-noon.jpg'
-import educationDawn from '@/assets/media/education-dawn.jpg'
+import { clips, type Clip } from '@/lib/media'
 
 export type BrandKey = 'global' | 'consulting' | 'accounting' | 'education'
+
+export type SunEvent = 'dawn' | 'sunrise' | 'noon' | 'sunset'
 
 export type Light = {
   name: L
   time: string
+  event: SunEvent
   hour: number
   accent: string
   glow: string
@@ -22,6 +22,7 @@ export type Brand = {
   name: string
   short: string
   light: Light
+  clip: Clip
   image: StaticImageData
   imageAlt: L
   focus: string
@@ -41,17 +42,19 @@ export const brands: Brand[] = [
     light: {
       name: { tr: 'Gün batımı', en: 'Sunset' },
       time: '18:20',
+      event: 'sunset',
       hour: 18.33,
       accent: '#b55d3b',
       glow: '#f2a65a',
       deep: '#2a1410',
     },
-    image: globalSunset,
+    clip: clips.global,
+    image: clips.global.poster,
     imageAlt: {
-      tr: 'Gün batımında Burj Khalifa ile Dubai silueti',
-      en: 'Dubai skyline with the Burj Khalifa at sunset',
+      tr: 'Gün batımında Dubai Marina kuleleri ve suya düşen ışık',
+      en: 'Dubai Marina towers and their reflections at sunset',
     },
-    focus: '62% 40%',
+    focus: clips.global.focus,
     tagline: {
       tr: 'Uluslararası ve büyük ölçekli işler: family office, servet planlaması, iş geliştirme, gayrimenkul ve teknoloji.',
       en: 'International, large-scale work: family office, wealth planning, business development, real estate and technology.',
@@ -131,17 +134,19 @@ export const brands: Brand[] = [
     light: {
       name: { tr: 'Sabah', en: 'Morning' },
       time: '08:30',
+      event: 'sunrise',
       hour: 8.5,
       accent: '#a7713f',
       glow: '#f4d6a0',
       deep: '#1c1810',
     },
-    image: consultingMorning,
+    clip: clips.consulting,
+    image: clips.consulting.poster,
     imageAlt: {
-      tr: 'Sabah sisinin üstünde yükselen Dubai gökdelenleri',
-      en: 'Dubai towers rising above the morning fog',
+      tr: 'Sabah sisinin içinden yükselen Dubai kuleleri',
+      en: 'Dubai towers rising out of the morning fog',
     },
-    focus: '50% 45%',
+    focus: clips.consulting.focus,
     tagline: {
       tr: 'BAE’de şirket kuruluşu ve faaliyete geçiş: lisans, oturum, banka ve operasyonel kurulum.',
       en: 'Setting up and starting operations in the UAE: licensing, residency, banking and operations.',
@@ -223,17 +228,19 @@ export const brands: Brand[] = [
     light: {
       name: { tr: 'Öğle', en: 'Noon' },
       time: '12:20',
+      event: 'noon',
       hour: 12.33,
       accent: '#008080',
       glow: '#eaf5f4',
       deep: '#08201f',
     },
-    image: accountingNoon,
+    clip: clips.accounting,
+    image: clips.accounting.poster,
     imageAlt: {
-      tr: 'Öğle güneşinde mavi gökyüzü önünde Dubai Frame',
-      en: 'The Dubai Frame against a clear midday sky',
+      tr: 'Öğle ışığında Burj Khalifa ve Downtown Dubai, üstünde akan bulutlar',
+      en: 'The Burj Khalifa and Downtown Dubai at midday, clouds moving overhead',
     },
-    focus: '50% 50%',
+    focus: clips.accounting.focus,
     tagline: {
       tr: 'Muhasebe, mali raporlama ve vergi uyumu: düzenli kayıt, anlaşılır rapor.',
       en: 'Accounting, financial reporting and tax compliance: orderly books, readable reports.',
@@ -315,17 +322,19 @@ export const brands: Brand[] = [
     light: {
       name: { tr: 'Şafak', en: 'Dawn' },
       time: '05:50',
+      event: 'dawn',
       hour: 5.83,
       accent: '#9eb5a4',
       glow: '#e9b7b0',
       deep: '#1b1a2c',
     },
-    image: educationDawn,
+    clip: clips.education,
+    image: clips.education.poster,
     imageAlt: {
-      tr: 'Şafakta pembe gökyüzü ve ay ile Dubai silueti',
-      en: 'Dubai skyline under a pink dawn sky with the moon',
+      tr: 'Şafakta çöl kumullarının üzerinde yükselen güneş',
+      en: 'The sun rising over desert dunes at dawn',
     },
-    focus: '55% 60%',
+    focus: clips.education.focus,
     tagline: {
       tr: 'Eğitim ve öğrenci danışmanlığı: yeni bir başlangıç için doğru okul, doğru plan.',
       en: 'Education and student advisory: the right school and the right plan for a new start.',

@@ -182,5 +182,109 @@ export const home = {
       },
     },
     title: { tr: 'Özel bir görüşme için.', en: 'For a private conversation.' },
+    channels: {
+      eyebrow: { tr: 'Bize ulaşmanın yolları', en: 'Ways to reach us' },
+      whatsapp: {
+        tr: 'En hızlı yol. Mesajınız hazır bir taslakla açılır.',
+        en: 'The quickest way. Your message opens as a ready draft.',
+      },
+      form: { tr: 'Görüşme formu', en: 'Consultation form' },
+      formText: {
+        tr: 'Durumunuzu ayrıntılı anlatmak ve hizmet seçmek için.',
+        en: 'To describe your situation in detail and choose a service.',
+      },
+      email: { tr: 'Belge ya da uzun bir not göndermek için.', en: 'To send documents or a longer note.' },
+      time: { tr: 'Dubai’de saat', en: 'Time in Dubai' },
+    },
+    flow: {
+      eyebrow: { tr: 'Talebiniz nasıl ilerler', en: 'What happens next' },
+      title: { tr: 'Yazdığınız andan size özel teklife.', en: 'From your first message to a proposal for you.' },
+      steps: [
+        {
+          title: { tr: 'Bize yazın', en: 'Write to us' },
+          text: {
+            tr: 'WhatsApp’tan ya da formdan ulaşın; ilgilendiğiniz hizmeti belirtin.',
+            en: 'Reach us on WhatsApp or through the form, and tell us the service you are interested in.',
+          },
+        },
+        {
+          title: { tr: 'Yönetimimiz okur', en: 'Our leadership reads it' },
+          text: {
+            tr: 'Hangi marka ya da hizmetle ilgili olursa olsun, her talep önce yönetimimize ulaşır.',
+            en: 'Whichever brand or service it concerns, every request reaches our leadership first.',
+          },
+        },
+        {
+          title: { tr: 'Doğru uzmanlık', en: 'The right discipline' },
+          text: {
+            tr: 'Talebiniz, ihtiyacınıza en uygun Equinoz uzmanlığıyla eşleşir.',
+            en: 'Your request is matched with the Equinoz discipline that fits it best.',
+          },
+        },
+        {
+          title: { tr: 'Görüşme ve teklif', en: 'Consultation and proposal' },
+          text: {
+            tr: 'Sizinle özel bir görüşme yapar, ardından size özel bir teklif hazırlarız.',
+            en: 'We hold a private consultation with you, then prepare a proposal for you.',
+          },
+        },
+      ],
+    },
+  },
+  values: {
+    eyebrow: { tr: 'Değerlerimiz', en: 'Our values' },
+    title: { tr: 'Her ilişkinin temelinde.', en: 'At the root of every relationship.' },
+    items: [
+      {
+        title: { tr: 'Dürüstlük', en: 'Integrity' },
+        text: {
+          tr: 'Her ortaklık sağlam bir etik temel üzerine kurulur.',
+          en: 'Every partnership is built on an unshakable foundation of ethics.',
+        },
+      },
+      {
+        title: { tr: 'Hassasiyet', en: 'Precision' },
+        text: {
+          tr: 'Tavsiyelerimiz derin bir kavrayışa dayanır; açık ve özenle sunulur.',
+          en: 'Advice rooted in insight, delivered with clarity and care.',
+        },
+      },
+      {
+        title: { tr: 'Gizlilik', en: 'Confidentiality' },
+        text: { tr: 'Gizlilik bizim için bir vaat değil, bir ilkedir.', en: 'Privacy is not a promise. It is a principle.' },
+      },
+      {
+        title: { tr: 'İnsanı anlamak', en: 'Human understanding' },
+        text: {
+          tr: 'Her yapının ardında onu şekillendiren insan hikâyesini görürüz.',
+          en: 'Behind every structure, we recognise the human story that shapes it.',
+        },
+      },
+    ],
+  },
+  today: {
+    eyebrow: { tr: 'Dubai’de bugün', en: 'Today in Dubai' },
+    title: { tr: 'Dört ışık, bugünün gerçek saatleriyle.', en: 'The four lights, at today’s real times.' },
+    lead: {
+      tr: 'Güneşin bugün Dubai üzerindeki yolu, şehrin koordinatlarından hesaplanır ve dakika dakika güncellenir.',
+      en: 'The sun’s path over Dubai today, calculated from the city’s coordinates and updated by the minute.',
+    },
+    clock: { tr: 'Dubai’de saat', en: 'Time in Dubai' },
+    istanbul: { tr: 'İstanbul', en: 'Istanbul' },
+    next: { tr: 'Sıradaki ışık', en: 'Next light' },
+    after: { tr: 'sonra', en: 'from now' },
+    dayLength: { tr: 'Gün uzunluğu', en: 'Day length' },
+    equinox: { tr: 'Sıradaki ekinoks', en: 'Next equinox' },
+    equinoxToday: { tr: 'Ekinoks bugün', en: 'The equinox is today' },
+    daysLeft: { tr: 'gün kaldı', en: 'days to go' },
+    dubaiTime: { tr: 'Dubai saatiyle', en: 'Dubai time' },
+    todayIn: { tr: 'Bugün Dubai’de', en: 'Today in Dubai' },
+    onEquinox: { tr: 'Ekinoks gününde', en: 'On the equinox' },
+    events: {
+      dawn: { tr: 'İlk ışık', en: 'First light' },
+      sunrise: { tr: 'Gün doğumu', en: 'Sunrise' },
+      noon: { tr: 'Güneş tepede', en: 'Solar noon' },
+      sunset: { tr: 'Gün batımı', en: 'Sunset' },
+    },
   },
 }

@@ -6,6 +6,7 @@ import { publishedPartners } from '@/lib/content/people'
 import { ui } from '@/lib/content/ui'
 import { href, type Lang } from '@/lib/i18n'
 import { site, whatsappLink } from '@/lib/site'
+import WhatsappMark from '@/components/whatsapp-mark'
 
 export default function Footer({ lang }: { lang: Lang }) {
   const year = new Date().getFullYear()
@@ -28,8 +29,9 @@ export default function Footer({ lang }: { lang: Lang }) {
                 href={whatsappLink(ui.form.whatsappIntro[lang])}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-sand px-5 py-3 text-sm text-ink transition-colors hover:bg-ember"
+                className="inline-flex items-center gap-2.5 rounded-full bg-sand px-5 py-3 text-sm text-ink transition-colors hover:bg-ember"
               >
+                <WhatsappMark />
                 {ui.whatsapp[lang]}
               </a>
               <Link
@@ -110,8 +112,9 @@ export default function Footer({ lang }: { lang: Lang }) {
                   href={whatsappLink(ui.form.whatsappIntro[lang])}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-line hover:text-sand"
+                  className="link-line inline-flex items-center gap-2 hover:text-sand"
                 >
+                  <WhatsappMark className="h-3.5 w-3.5" />
                   WhatsApp {site.whatsapp.display}
                 </a>
               </li>

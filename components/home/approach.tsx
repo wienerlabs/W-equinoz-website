@@ -5,7 +5,7 @@ import { home } from '@/lib/content/home'
 import type { Lang } from '@/lib/i18n'
 import { gsap, prefersReducedMotion, useGSAP } from '@/lib/motion'
 
-export default function Approach({ lang }: { lang: Lang }) {
+export default function Approach({ lang, accent = '#b55d3b' }: { lang: Lang; accent?: string }) {
   const root = useRef<HTMLElement>(null)
   const rail = useRef<HTMLOListElement>(null)
   const copy = home.approach
@@ -51,7 +51,7 @@ export default function Approach({ lang }: { lang: Lang }) {
           <svg viewBox="0 0 1000 120" className="pointer-events-none absolute -top-10 right-0 hidden w-[46%] lg:block" aria-hidden="true">
             <path className="approach-arc" d="M 10 110 Q 500 -60 990 110" fill="none" stroke="#0e2725" strokeOpacity="0.25" strokeDasharray="3 7" />
             <line x1="0" x2="1000" y1="110" y2="110" stroke="#0e2725" strokeOpacity="0.2" />
-            <circle className="approach-sun" cx="10" cy="110" r="9" fill="#b55d3b" />
+            <circle className="approach-sun" cx="10" cy="110" r="9" fill={accent} />
           </svg>
           <p className="eyebrow mb-6 text-ink/55" data-reveal>
             {copy.eyebrow[lang]}
@@ -70,7 +70,7 @@ export default function Approach({ lang }: { lang: Lang }) {
               data-reveal
               className="flex min-h-[15rem] flex-col justify-between bg-clay py-8 lg:min-h-[22rem] lg:w-[34vw] lg:max-w-[30rem] lg:shrink-0 lg:border-l lg:border-ink/15 lg:px-10 lg:py-4"
             >
-              <span className="font-display text-[clamp(3rem,6vw,5.5rem)] leading-none text-terracotta/85">
+              <span className="font-display text-[clamp(3rem,6vw,5.5rem)] font-extralight leading-none opacity-85" style={{ color: accent }}>
                 {String(index + 1).padStart(2, '0')}
               </span>
               <div className="mt-10">
