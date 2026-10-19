@@ -144,6 +144,7 @@ export class Stage {
   state: StageState = { a: 0, b: 0, mix: 0, night: 0, tint: [1, 0.85, 0.7], tintAmount: 0, flare: 0, sunPulse: 0 }
   zoom = 1.06
   onReady?: () => void
+  onLost?: () => void
 
   private gl: WebGLRenderingContext
   private program: WebGLProgram
@@ -158,14 +159,18 @@ export class Stage {
   private observer?: IntersectionObserver
   private resizer?: ResizeObserver
   private destroyed = false
+  private static support?: boolean
 
   static supported(): boolean {
+    if (Stage.support !== undefined) return Stage.support
     try {
-      const canvas = document.createElement('canvas')
-      return Boolean(canvas.getContext('webgl'))
+      const probe = document.createElement('canvas').getContext('webgl')
+      Stage.support = Boolean(probe)
+      probe?.getExtension('WEBGL_lose_context')?.loseContext()
     } catch {
-      return false
+      Stage.support = false
     }
+    return Stage.support
   }
 
   constructor(private canvas: HTMLCanvasElement, private images: StageImage[], private textureWidth: number) {
@@ -192,6 +197,7 @@ export class Stage {
       if (this.visible) this.start()
     })
     this.observer.observe(canvas)
+    canvas.addEventListener('webglcontextlost', this.lost)
     this.load()
   }
 
@@ -210,8 +216,18 @@ export class Stage {
     cancelAnimationFrame(this.frame)
     this.observer?.disconnect()
     this.resizer?.disconnect()
+    this.canvas.removeEventListener('webglcontextlost', this.lost)
     for (const texture of this.textures) if (texture) this.gl.deleteTexture(texture)
     this.gl.deleteProgram(this.program)
+    this.gl.getExtension('WEBGL_lose_context')?.loseContext()
+  }
+
+  private lost = () => {
+    this.destroyed = true
+    cancelAnimationFrame(this.frame)
+    this.observer?.disconnect()
+    this.resizer?.disconnect()
+    this.onLost?.()
   }
 
   private link(): WebGLProgram {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { composeMessage, type ContactErrors, type ContactPayload } from '@/lib/contact'
+import { LIMITS, composeMessage, type ContactErrors, type ContactPayload } from '@/lib/contact'
 import { ui } from '@/lib/content/ui'
 import type { ServiceGroup } from '@/lib/content/options'
 import type { Lang } from '@/lib/i18n'
@@ -28,6 +28,7 @@ export default function ContactForm({
 }) {
   const t = ui.form
   const started = useRef(0)
+  const result = useRef<HTMLParagraphElement>(null)
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<ContactErrors>({})
   const [fallback, setFallback] = useState('')
@@ -45,6 +46,10 @@ export default function ContactForm({
   useEffect(() => {
     started.current = Date.now()
   }, [])
+
+  useEffect(() => {
+    if (status === 'sent' || status === 'fallback') result.current?.focus()
+  }, [status])
 
   const set = (field: keyof typeof values) => (value: string) => {
     setValues((current) => {
@@ -123,7 +128,9 @@ export default function ContactForm({
   if (status === 'sent') {
     return (
       <div role="status" className="py-10">
-        <p className="font-display text-[clamp(2rem,4vw,3.4rem)] leading-none">{t.successTitle[lang]}</p>
+        <p ref={result} tabIndex={-1} className="font-display text-[clamp(2rem,4vw,3.4rem)] leading-none outline-none">
+          {t.successTitle[lang]}
+        </p>
         <p className={`mt-5 max-w-md text-lg ${muted}`}>{t.successText[lang]}</p>
       </div>
     )
@@ -132,7 +139,9 @@ export default function ContactForm({
   if (status === 'fallback') {
     return (
       <div role="status" className="py-10">
-        <p className="font-display text-[clamp(1.8rem,3.4vw,2.8rem)] leading-tight">{t.fallbackTitle[lang]}</p>
+        <p ref={result} tabIndex={-1} className="font-display text-[clamp(1.8rem,3.4vw,2.8rem)] leading-tight outline-none">
+          {t.fallbackTitle[lang]}
+        </p>
         <p className={`mt-5 max-w-md text-lg ${muted}`}>{t.fallbackText[lang]}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a
@@ -168,6 +177,7 @@ export default function ContactForm({
         </label>
         <input
           id="field-name"
+          maxLength={LIMITS.name}
           className="field"
           autoComplete="name"
           value={values.name}
@@ -184,6 +194,7 @@ export default function ContactForm({
         </label>
         <input
           id="field-email"
+          maxLength={LIMITS.email}
           type="email"
           inputMode="email"
           className="field"
@@ -236,6 +247,7 @@ export default function ContactForm({
           </select>
           <input
             id="field-phone"
+            maxLength={LIMITS.phone}
             type="tel"
             inputMode="tel"
             className="field"
@@ -278,6 +290,8 @@ export default function ContactForm({
         </label>
         <textarea
           id="field-message"
+          data-lenis-prevent
+          maxLength={LIMITS.message}
           rows={4}
           className="field resize-none"
           placeholder={t.messagePlaceholder[lang]}

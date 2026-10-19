@@ -100,6 +100,7 @@ html.lenis body {
 .no-motion [data-reveal],
 .no-motion [data-split],
 .no-motion [data-clip],
+.no-motion [data-draw],
 .no-motion .hero-title,
 .no-motion .hero-fade {
   stroke-dashoffset: 0 !important;
@@ -126,6 +127,32 @@ html.lenis body {
 
 .split-line {
   display: block;
+}
+
+html:not(.js) .light-track,
+.no-motion .light-track {
+  height: auto;
+}
+
+html:not(.js) .light-stage,
+.no-motion .light-stage {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+}
+
+html:not(.js) .light-panels,
+.no-motion .light-panels {
+  display: grid;
+  gap: 4rem;
+  padding-top: 3rem;
+}
+
+html:not(.js) .light-panel,
+.no-motion .light-panel {
+  position: static;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .grain::after {

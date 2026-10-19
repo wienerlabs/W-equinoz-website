@@ -72,6 +72,12 @@ export default function FourLights({ lang }: { lang: Lang }) {
             gsap.to(canvas.current, { opacity: 1, duration: 1.2 })
             gsap.to(photos, { opacity: 0, duration: 1.2, delay: 0.4 })
           }
+          stage.onLost = () => {
+            stage = null
+            gsap.killTweensOf(photos)
+            gsap.set(canvas.current, { opacity: 0 })
+            update(last)
+          }
         } catch {
           stage = null
         }
@@ -81,7 +87,9 @@ export default function FourLights({ lang }: { lang: Lang }) {
         stage?.pointer((event.clientX / window.innerWidth) * 2 - 1, (event.clientY / window.innerHeight) * 2 - 1)
       window.addEventListener('pointermove', move, { passive: true })
 
+      let last = 0
       const update = (progress: number) => {
+        last = progress
         const raw = progress * 3
         const segment = Math.min(2, Math.floor(raw))
         const local = raw - segment
@@ -109,8 +117,7 @@ export default function FourLights({ lang }: { lang: Lang }) {
           const visibility = clamp(1 - Math.abs(distance) * 2.4)
           panel.style.opacity = String(visibility)
           panel.style.transform = `translate3d(0, ${(-distance * 48).toFixed(1)}px, 0)`
-          panel.style.pointerEvents = visibility > 0.6 ? 'auto' : 'none'
-          panel.setAttribute('aria-hidden', visibility > 0.6 ? 'false' : 'true')
+          panel.inert = visibility <= 0.6
         })
 
         markers.forEach((marker, index) => {
@@ -156,8 +163,8 @@ export default function FourLights({ lang }: { lang: Lang }) {
       className="relative bg-night text-sand"
       style={{ ['--light' as string]: brands[0].light.glow }}
     >
-      <div ref={track} className="relative h-[420svh]">
-        <div className="sticky top-0 h-svh overflow-hidden">
+      <div ref={track} className="light-track relative h-[420svh]">
+        <div className="light-stage sticky top-0 h-svh overflow-hidden">
           {brands.map((brand, index) => (
             <Image
               key={brand.key}
@@ -241,13 +248,13 @@ export default function FourLights({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            <div className="relative mt-4 flex-1">
+            <div className="light-panels relative mt-4 flex-1">
               {brands.map((brand, index) => (
                 <article
                   key={brand.key}
                   className="light-panel absolute inset-x-0 bottom-0 max-w-2xl will-change-transform"
                   style={{ opacity: index === 0 ? 1 : 0 }}
-                  aria-hidden={index === 0 ? 'false' : 'true'}
+                  inert={index !== 0}
                 >
                   <p className="flex items-center gap-3 text-sm" style={{ color: brand.light.glow }}>
                     <span className="h-2 w-2 rounded-full" style={{ background: brand.light.glow, boxShadow: `0 0 18px 4px ${brand.light.glow}66` }} />

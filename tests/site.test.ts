@@ -22,6 +22,8 @@ test('route keys round-trip through segments and pathnames', () => {
     }
   }
   assert.equal(keyFromPathname('/olmayan-sayfa'), undefined)
+  assert.deepEqual(keyFromPathname('/tr/ekip'), { key: 'team', lang: 'tr' })
+  assert.deepEqual(keyFromPathname('/tr'), { key: 'home', lang: 'tr' })
 })
 
 test('equinox sun path over Dubai', () => {
@@ -65,8 +67,23 @@ test('contact validation reports missing and malformed fields', () => {
 test('contact validation flags bots by honeypot and fill time', () => {
   const honeypot = validateContact({ ...valid, website: 'http://spam.example' }, services)
   const tooFast = validateContact({ ...valid, elapsed: 300 }, services)
+  const untimed = validateContact({ ...valid, elapsed: undefined }, services)
   assert.ok(!honeypot.ok && honeypot.spam)
   assert.ok(!tooFast.ok && tooFast.spam)
+  assert.ok(!untimed.ok && untimed.spam)
+})
+
+test('contact validation strips control characters', () => {
+  const crlf = String.fromCharCode(13, 10)
+  const result = validateContact(
+    { ...valid, name: `Ayşe${crlf}Bcc: x@y.z`, source: `https://www.equinoz.com/global${crlf}X`, message: `Bir${crlf}İki` },
+    services,
+  )
+  assert.ok(result.ok)
+  if (!result.ok) return
+  assert.equal(result.data.name, 'Ayşe  Bcc: x@y.z')
+  assert.ok(!result.data.source.includes(crlf))
+  assert.equal(result.data.message, 'Bir\nİki')
 })
 
 test('composed message names the service and the source page', () => {

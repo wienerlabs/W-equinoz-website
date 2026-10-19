@@ -59,6 +59,7 @@ export const segmentsFor = (key: RouteKey, lang: Lang): string[] => segmentsOf(r
 
 export const keyFromPathname = (pathname: string): { key: RouteKey; lang: Lang } | undefined => {
   const lang: Lang = pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'tr'
-  const key = routeKeys.find((candidate) => routes[candidate][lang] === (pathname.replace(/\/$/, '') || '/'))
+  const path = pathname.replace(/^\/tr(?=\/|$)/, '').replace(/\/$/, '') || '/'
+  const key = routeKeys.find((candidate) => routes[candidate][lang] === path)
   return key ? { key, lang } : undefined
 }

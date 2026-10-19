@@ -55,7 +55,7 @@ export default function GlobalFocus({ lang }: { lang: Lang }) {
     <section
       ref={root}
       aria-labelledby="global-title"
-      className="relative overflow-hidden bg-[radial-gradient(120%_70%_at_80%_110%,#5b2a1a_0%,#2a1410_38%,#0d0a09_75%)] text-sand"
+      className="relative overflow-clip bg-[radial-gradient(120%_70%_at_80%_110%,#5b2a1a_0%,#2a1410_38%,#0d0a09_75%)] text-sand"
     >
       <div
         ref={media}

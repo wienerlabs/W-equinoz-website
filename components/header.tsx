@@ -14,12 +14,14 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
   const pathname = usePathname()
   const bar = useRef<HTMLDivElement>(null)
   const panel = useRef<HTMLDivElement>(null)
+  const wasOpen = useRef(false)
   const [openPath, setOpenPath] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [lightPath, setLightPath] = useState<string | null>(null)
   const open = openPath === pathname
   const light = lightPath === pathname
+  const close = () => setOpenPath(null)
 
   const current = keyFromPathname(pathname)
   const switchHref = current ? href(current.key, otherLang(lang)) : href('home', otherLang(lang))
@@ -35,6 +37,15 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    const onChange = () => {
+      if (desktop.matches) setOpenPath(null)
+    }
+    desktop.addEventListener('change', onChange)
+    return () => desktop.removeEventListener('change', onChange)
   }, [])
 
   useEffect(() => {
@@ -80,9 +91,10 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
           { yPercent: 120, opacity: 0 },
           { yPercent: 0, opacity: 1, duration: 1, ease: 'expo.out', stagger: 0.06, delay: 0.35 },
         )
-      } else {
+      } else if (wasOpen.current) {
         lenis?.start()
       }
+      wasOpen.current = open
     },
     { dependencies: [open], scope: panel },
   )
@@ -109,80 +121,82 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
         }`}
       >
         <div ref={bar} className="relative">
-        <div
-          className={`absolute inset-0 -z-10 transition-opacity duration-700 ${
-            scrolled && !open ? 'opacity-100' : 'opacity-0'
-          } ${light ? 'bg-sand/80' : 'bg-night/55'} backdrop-blur-xl`}
-        />
-        <div className="mx-auto flex h-18 max-w-[1440px] items-center justify-between gap-6 px-5 sm:px-8 lg:h-20 lg:px-12">
-          <Link href={href('home', lang)} className="group flex items-center gap-3" aria-label="Equinoz">
-            <Mark className="h-[18px] w-auto transition-transform duration-700 group-hover:scale-x-[1.08]" />
-            <Wordmark className="hidden h-[13px] w-auto sm:block" />
-          </Link>
+          <div
+            className={`absolute inset-0 -z-10 transition-opacity duration-700 ${
+              scrolled || open ? 'opacity-100' : 'opacity-0'
+            } ${open ? 'bg-night' : light ? 'bg-sand/80' : 'bg-night/55'} backdrop-blur-xl`}
+          />
+          <div className="mx-auto flex h-18 max-w-[1440px] items-center justify-between gap-6 px-5 sm:px-8 lg:h-20 lg:px-12">
+            <Link href={href('home', lang)} onClick={close} className="group flex items-center gap-3" aria-label="Equinoz">
+              <Mark className="h-[18px] w-auto transition-transform duration-700 group-hover:scale-x-[1.08]" />
+              <Wordmark className="hidden h-[13px] w-auto sm:block" />
+            </Link>
 
-          <nav aria-label={ui.brands[lang]} className="hidden items-center gap-1 lg:flex">
-            {navLinks.map((link) => {
-              const active = current?.key === link.key
-              return (
-                <Link
-                  key={link.key}
-                  href={href(link.key, lang)}
-                  className={`group relative px-3.5 py-2 text-[0.9375rem] transition-opacity ${
-                    active ? 'opacity-100' : 'opacity-75 hover:opacity-100'
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute inset-x-3.5 bottom-1 h-px origin-left transition-transform duration-500 ease-[var(--ease-expo)] ${
-                      active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            <nav aria-label={ui.brands[lang]} className="hidden items-center gap-1 lg:flex">
+              {navLinks.map((link) => {
+                const active = current?.key === link.key
+                return (
+                  <Link
+                    key={link.key}
+                    href={href(link.key, lang)}
+                    aria-current={active ? 'page' : undefined}
+                    className={`group relative px-3.5 py-2 text-[0.9375rem] transition-opacity ${
+                      active ? 'opacity-100' : 'opacity-75 hover:opacity-100'
                     }`}
-                    style={{ background: link.accent ?? 'currentColor' }}
-                  />
-                </Link>
-              )
-            })}
-          </nav>
+                  >
+                    {link.label}
+                    <span
+                      className={`absolute inset-x-3.5 bottom-1 h-px origin-left transition-transform duration-500 ease-[var(--ease-expo)] ${
+                        active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      }`}
+                      style={{ background: link.accent ?? 'currentColor' }}
+                    />
+                  </Link>
+                )
+              })}
+            </nav>
 
-          <div className="flex items-center gap-2 sm:gap-4">
-            <Link
-              href={switchHref}
-              hrefLang={otherLang(lang)}
-              className="rounded-full px-3 py-1.5 text-sm opacity-80 transition-opacity hover:opacity-100"
-              aria-label={ui.switchLang[lang]}
-            >
-              {otherLang(lang) === 'en' ? 'EN' : 'TR'}
-            </Link>
-            <Link
-              href={href('contact', lang)}
-              className={`hidden rounded-full border px-5 py-2.5 text-sm transition-colors duration-500 md:inline-flex ${
-                light && scrolled && !open
-                  ? 'border-ink/25 hover:bg-ink hover:text-sand'
-                  : 'border-sand/30 hover:bg-sand hover:text-ink'
-              }`}
-            >
-              {ui.consultShort[lang]}
-            </Link>
-            <button
-              type="button"
-              onClick={() => setOpenPath(open ? null : pathname)}
-              aria-expanded={open}
-              aria-controls="site-menu"
-              className="relative flex h-11 w-11 items-center justify-center lg:hidden"
-            >
-              <span className="sr-only">{open ? ui.close[lang] : ui.menu[lang]}</span>
-              <span
-                className={`absolute h-px w-6 bg-current transition-transform duration-500 ${
-                  open ? 'rotate-45' : '-translate-y-[4px]'
+            <div className="flex items-center gap-2 sm:gap-4">
+              <a
+                href={switchHref}
+                hrefLang={otherLang(lang)}
+                lang={otherLang(lang)}
+                className="rounded-full px-3 py-1.5 text-sm opacity-80 transition-opacity hover:opacity-100"
+                aria-label={ui.switchLang[lang]}
+              >
+                {otherLang(lang) === 'en' ? 'EN' : 'TR'}
+              </a>
+              <Link
+                href={href('contact', lang)}
+                className={`hidden rounded-full border px-5 py-2.5 text-sm transition-colors duration-500 md:inline-flex ${
+                  light && scrolled && !open
+                    ? 'border-ink/25 hover:bg-ink hover:text-sand'
+                    : 'border-sand/30 hover:bg-sand hover:text-ink'
                 }`}
-              />
-              <span
-                className={`absolute h-px w-6 bg-current transition-transform duration-500 ${
-                  open ? '-rotate-45' : 'translate-y-[4px]'
-                }`}
-              />
-            </button>
+              >
+                {ui.consultShort[lang]}
+              </Link>
+              <button
+                type="button"
+                onClick={() => setOpenPath(open ? null : pathname)}
+                aria-expanded={open}
+                aria-controls="site-menu"
+                className="relative flex h-11 w-11 items-center justify-center lg:hidden"
+              >
+                <span className="sr-only">{open ? ui.close[lang] : ui.menu[lang]}</span>
+                <span
+                  className={`absolute h-px w-6 bg-current transition-transform duration-500 ${
+                    open ? 'rotate-45' : '-translate-y-[4px]'
+                  }`}
+                />
+                <span
+                  className={`absolute h-px w-6 bg-current transition-transform duration-500 ${
+                    open ? '-rotate-45' : 'translate-y-[4px]'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
-        </div>
         </div>
       </header>
 
@@ -190,13 +204,18 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
         id="site-menu"
         ref={panel}
         hidden={!open}
-        className="fixed inset-0 z-[65] overflow-y-auto bg-night text-sand lg:hidden"
+        data-lenis-prevent
+        className="fixed inset-0 z-[65] overflow-y-auto overscroll-contain bg-night text-sand lg:hidden"
       >
         <div className="flex min-h-full flex-col justify-between px-6 pb-10 pt-28">
           <ul className="space-y-1">
             {brands.map((brand) => (
               <li key={brand.key} className="overflow-hidden">
-                <Link href={href(brand.route, lang)} className="menu-item flex items-baseline justify-between gap-4 py-2">
+                <Link
+                  href={href(brand.route, lang)}
+                  onClick={close}
+                  className="menu-item flex items-baseline justify-between gap-4 py-2"
+                >
                   <span className="font-display text-[2.6rem] leading-none">{brand.short}</span>
                   <span className="text-sm" style={{ color: brand.light.glow }}>
                     {brand.light.name[lang]}
@@ -207,19 +226,19 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
           </ul>
           <ul className="mt-10 space-y-3 text-lg">
             <li className="overflow-hidden">
-              <Link href={href('team', lang)} className="menu-item block">
+              <Link href={href('team', lang)} onClick={close} className="menu-item block">
                 {ui.team[lang]}
               </Link>
             </li>
             {showPartners ? (
               <li className="overflow-hidden">
-                <Link href={href('partners', lang)} className="menu-item block">
+                <Link href={href('partners', lang)} onClick={close} className="menu-item block">
                   {ui.partners[lang]}
                 </Link>
               </li>
             ) : null}
             <li className="overflow-hidden">
-              <Link href={href('contact', lang)} className="menu-item block">
+              <Link href={href('contact', lang)} onClick={close} className="menu-item block">
                 {ui.contact[lang]}
               </Link>
             </li>
@@ -227,6 +246,7 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
           <div className="mt-12 grid gap-3">
             <Link
               href={href('contact', lang)}
+              onClick={close}
               className="menu-item inline-flex w-full items-center justify-center rounded-full bg-sand px-6 py-4 text-ink"
             >
               {ui.consult[lang]}
@@ -235,6 +255,7 @@ export default function Header({ lang, showPartners }: { lang: Lang; showPartner
               href={whatsappLink(ui.form.whatsappIntro[lang])}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={close}
               className="menu-item inline-flex w-full items-center justify-center rounded-full border border-sand/30 px-6 py-4"
             >
               {ui.whatsapp[lang]}

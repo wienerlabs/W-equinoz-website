@@ -3,13 +3,52 @@ import { serviceLabel, serviceValues } from '@/lib/content/options'
 
 const MAX_BODY = 20_000
 
+async function readCapped(request: Request): Promise<string | null> {
+  const reader = request.body?.getReader()
+  if (!reader) return ''
+  const chunks: Uint8Array[] = []
+  let size = 0
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) break
+    size += value.byteLength
+    if (size > MAX_BODY) {
+      await reader.cancel()
+      return null
+    }
+    chunks.push(value)
+  }
+  return Buffer.concat(chunks).toString('utf8')
+}
+
+const sameOrigin = (request: Request) => {
+  const origin = request.headers.get('origin')
+  if (!origin) return false
+  try {
+    return new URL(origin).host === new URL(request.url).host
+  } catch {
+    return false
+  }
+}
+
+const pathOf = (source: string) => {
+  try {
+    return new URL(source).pathname
+  } catch {
+    return 'unknown'
+  }
+}
+
 export async function POST(request: Request) {
+  if (!sameOrigin(request)) return Response.json({ ok: false }, { status: 403 })
   if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY) {
     return Response.json({ ok: false }, { status: 413 })
   }
+  const raw = await readCapped(request)
+  if (raw === null) return Response.json({ ok: false }, { status: 413 })
   let body: unknown
   try {
-    body = JSON.parse((await request.text()).slice(0, MAX_BODY))
+    body = JSON.parse(raw)
   } catch {
     return Response.json({ ok: false }, { status: 400 })
   }
@@ -28,14 +67,6 @@ export async function POST(request: Request) {
   }
 
   const label = serviceLabel(result.data.service, 'tr')
-  const path = (() => {
-    try {
-      return new URL(result.data.source).pathname
-    } catch {
-      return result.data.source
-    }
-  })()
-
   try {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -44,7 +75,7 @@ export async function POST(request: Request) {
         from,
         to: to.split(',').map((address) => address.trim()),
         reply_to: result.data.email,
-        subject: `Equinoz web talebi: ${label} (${path})`,
+        subject: `Equinoz web talebi: ${label} (${pathOf(result.data.source)})`,
         text: composeMessage(result.data, label, 'tr'),
       }),
       signal: AbortSignal.timeout(10_000),

@@ -42,6 +42,7 @@ export default function LightHero({
           stage.state.flare = 1
           stage.state.tint = hexToRgb(glow)
           stage.onReady = () => gsap.to(canvas.current, { opacity: 1, duration: 1.2 })
+          stage.onLost = () => gsap.to(canvas.current, { opacity: 0, duration: 0.6 })
         } catch {
           stage = null
         }

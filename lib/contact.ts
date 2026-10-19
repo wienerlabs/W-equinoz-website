@@ -15,7 +15,7 @@ export type ContactErrors = Partial<Record<keyof ContactPayload, FieldError>>
 
 export const MIN_FILL_MS = 2500
 
-const LIMITS: Record<keyof ContactPayload, number> = {
+export const LIMITS: Record<keyof ContactPayload, number> = {
   name: 120,
   email: 160,
   country: 80,
@@ -29,7 +29,15 @@ const LIMITS: Record<keyof ContactPayload, number> = {
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
-const text = (value: unknown, limit: number) => (typeof value === 'string' ? value.trim().slice(0, limit) : '')
+const span = (from: number, to: number) => `${String.fromCharCode(from)}-${String.fromCharCode(to)}`
+const CONTROL = new RegExp(`[${span(0, 31)}${String.fromCharCode(127)}]`, 'g')
+const CONTROL_EXCEPT_LINES = new RegExp(`[${span(0, 8)}${span(11, 31)}${String.fromCharCode(127)}]`, 'g')
+
+const line = (value: unknown, limit: number) =>
+  typeof value === 'string' ? value.replace(CONTROL, ' ').trim().slice(0, limit) : ''
+
+const block = (value: unknown, limit: number) =>
+  typeof value === 'string' ? value.replace(/\r\n?/g, '\n').replace(CONTROL_EXCEPT_LINES, '').trim().slice(0, limit) : ''
 
 export type ValidationResult =
   | { ok: true; data: ContactPayload }
@@ -37,18 +45,19 @@ export type ValidationResult =
 
 export function validateContact(input: unknown, services: readonly string[]): ValidationResult {
   const raw = (input && typeof input === 'object' ? input : {}) as Record<string, unknown>
-  if (text(raw.website, 200) !== '' || (typeof raw.elapsed === 'number' && raw.elapsed < MIN_FILL_MS)) {
+  const elapsed = typeof raw.elapsed === 'number' && Number.isFinite(raw.elapsed) ? raw.elapsed : -1
+  if (line(raw.website, 200) !== '' || elapsed < MIN_FILL_MS) {
     return { ok: false, spam: true, errors: {} }
   }
   const data: ContactPayload = {
-    name: text(raw.name, LIMITS.name),
-    email: text(raw.email, LIMITS.email),
-    country: text(raw.country, LIMITS.country),
-    dial: text(raw.dial, LIMITS.dial).replace(/[^\d+]/g, ''),
-    phone: text(raw.phone, LIMITS.phone).replace(/[^\d\s()+-]/g, ''),
-    service: text(raw.service, LIMITS.service),
-    message: text(raw.message, LIMITS.message),
-    source: text(raw.source, LIMITS.source),
+    name: line(raw.name, LIMITS.name),
+    email: line(raw.email, LIMITS.email),
+    country: line(raw.country, LIMITS.country),
+    dial: line(raw.dial, LIMITS.dial).replace(/[^\d+]/g, ''),
+    phone: line(raw.phone, LIMITS.phone).replace(/[^\d\s()+-]/g, ''),
+    service: line(raw.service, LIMITS.service),
+    message: block(raw.message, LIMITS.message),
+    source: line(raw.source, LIMITS.source),
     lang: raw.lang === 'en' ? 'en' : 'tr',
   }
   const errors: ContactErrors = {}
