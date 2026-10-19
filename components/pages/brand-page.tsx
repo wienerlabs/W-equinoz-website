@@ -56,7 +56,7 @@ export default function BrandPage({ brand, lang }: { brand: Brand; lang: Lang })
         </div>
       </section>
 
-      <section aria-labelledby="services-title" className="relative overflow-hidden bg-night text-sand">
+      <section aria-labelledby="services-title" className="relative overflow-clip bg-night text-sand">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 h-[60%]"

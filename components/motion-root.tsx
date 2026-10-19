@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 import { gsap, ScrollTrigger, SplitText, prefersReducedMotion, setLenis, getLenis } from '@/lib/motion'
@@ -78,9 +78,18 @@ function reveal() {
 
 export default function MotionRoot() {
   const pathname = usePathname()
+  const fromHistory = useRef(false)
+
+  useEffect(() => {
+    const onPop = () => {
+      fromHistory.current = true
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   useLayoutEffect(() => {
-    document.documentElement.classList.add('motion-ready')
+    document.documentElement.classList.add('js', 'motion-ready')
     if (prefersReducedMotion()) return
     const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), anchors: true })
     setLenis(lenis)
@@ -97,6 +106,10 @@ export default function MotionRoot() {
   }, [])
 
   useLayoutEffect(() => {
+    if (fromHistory.current) {
+      fromHistory.current = false
+      return
+    }
     getLenis()?.scrollTo(0, { immediate: true, force: true })
     window.scrollTo(0, 0)
   }, [pathname])

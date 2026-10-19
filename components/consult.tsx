@@ -27,7 +27,7 @@ export default function Consult({
     .join('\n')
 
   return (
-    <section id="consultation" aria-labelledby="consult-title" className="relative overflow-hidden bg-night text-sand">
+    <section id="consultation" aria-labelledby="consult-title" className="relative overflow-clip bg-night text-sand">
       <div className="pointer-events-none absolute -right-[20vw] -top-[30vw] h-[70vw] w-[70vw] rounded-full bg-[radial-gradient(circle,rgba(242,166,90,0.12),transparent_60%)]" />
       <div className="relative mx-auto grid max-w-[1440px] gap-16 px-5 py-28 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-36">
         <div className="lg:col-span-5">

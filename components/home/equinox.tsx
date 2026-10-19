@@ -75,12 +75,17 @@ export default function Equinox({ lang }: { lang: Lang }) {
     () => {
       const element = stage.current!
       const q = gsap.utils.selector(root.current)
+      const days = q('.eq-day')
+      const nights = q('.eq-night')
+      let shown = -1
       const setSplit = (share: number) => {
+        if (Math.abs(share - shown) < 0.0002) return
+        shown = share
         element.style.setProperty('--split', `${(share * 100).toFixed(3)}%`)
         const day = format(share, lang)
         const night = format(1 - share, lang)
-        for (const node of q('.eq-day')) node.textContent = day
-        for (const node of q('.eq-night')) node.textContent = night
+        for (const node of days) if (node.textContent !== day) node.textContent = day
+        for (const node of nights) if (node.textContent !== night) node.textContent = night
       }
       if (prefersReducedMotion()) {
         setSplit(0.5)
@@ -95,7 +100,12 @@ export default function Equinox({ lang }: { lang: Lang }) {
         wobble += (wobbleTarget - wobble) * 0.08
         setSplit(Math.min(0.92, Math.max(0.08, scrollShare + wobble)))
       }
-      gsap.ticker.add(render)
+      ScrollTrigger.create({
+        trigger: track.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        onToggle: (self) => (self.isActive ? gsap.ticker.add(render) : gsap.ticker.remove(render)),
+      })
       const move = (event: PointerEvent) => {
         wobbleTarget = ((event.clientX / window.innerWidth) * 2 - 1) * 0.035
       }

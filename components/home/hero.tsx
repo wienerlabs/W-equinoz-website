@@ -37,6 +37,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           stage.state.sunPulse = 1
           stage.state.tint = [1, 0.8, 0.58]
           stage.onReady = () => gsap.to(canvas.current, { opacity: 1, duration: 1.4, ease: 'power2.out' })
+          stage.onLost = () => gsap.to(canvas.current, { opacity: 0, duration: 0.6 })
         } catch {
           stage = null
         }
@@ -110,7 +111,7 @@ export default function Hero({ lang }: { lang: Lang }) {
       <div className="hero-copy relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-between px-5 pb-10 pt-28 sm:px-8 lg:px-12 lg:pb-14 lg:pt-36">
         <div>
           <p className="hero-fade eyebrow mb-6 text-clay/80">{home.hero.eyebrow[lang]}</p>
-          <h1 className="hero-title max-w-[11ch] text-[clamp(3.1rem,9.2vw,9.75rem)] leading-[0.88] tracking-[-0.035em] text-sand">
+          <h1 lang="en" className="hero-title max-w-[11ch] text-[clamp(3.1rem,9.2vw,9.75rem)] leading-[0.88] tracking-[-0.035em] text-sand">
             Global Vision.
             <br />
             <em className="font-light italic text-[#fde9cf] [text-shadow:0_2px_40px_rgba(6,18,17,0.55)]">Preserving Legacy.</em>

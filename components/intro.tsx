@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { MARK_LEFT, MARK_RIGHT } from '@/components/brand'
 import { coverRect } from '@/lib/stage'
-import { gsap, getLenis, useGSAP } from '@/lib/motion'
+import { gsap, getLenis, prefersReducedMotion, useGSAP } from '@/lib/motion'
 
 const STORAGE_KEY = 'eqz-intro'
 
@@ -23,6 +23,13 @@ export default function Intro({ skipLabel }: { skipLabel: string }) {
   useGSAP(
     () => {
       const html = document.documentElement
+      let seen = false
+      try {
+        seen = sessionStorage.getItem(STORAGE_KEY) === '1'
+      } catch {
+        seen = true
+      }
+      if (seen || prefersReducedMotion()) html.classList.add('intro-done')
       if (html.classList.contains('intro-done')) return
       const element = root.current!
       const q = gsap.utils.selector(element)

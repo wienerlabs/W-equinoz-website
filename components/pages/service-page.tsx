@@ -79,7 +79,7 @@ export default function ServicePage({ service, lang }: { service: Service; lang:
         </div>
       </section>
 
-      <section aria-labelledby="audience-title" className="relative overflow-hidden bg-ink text-sand">
+      <section aria-labelledby="audience-title" className="relative overflow-clip bg-ink text-sand">
         <div className="mx-auto grid max-w-[1440px] gap-14 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-32">
           <h2 id="audience-title" data-split className="text-[clamp(2.4rem,5vw,4.6rem)] leading-none tracking-[-0.03em] lg:col-span-4">
             {ui.audience[lang]}

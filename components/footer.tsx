@@ -10,12 +10,12 @@ import { site, whatsappLink } from '@/lib/site'
 export default function Footer({ lang }: { lang: Lang }) {
   const year = new Date().getFullYear()
   return (
-    <footer className="relative overflow-hidden bg-night text-sand">
+    <footer className="relative overflow-clip bg-night text-sand">
       <div className="mx-auto max-w-[1440px] px-5 pb-10 pt-24 sm:px-8 lg:px-12 lg:pt-32">
         <div className="flex flex-col gap-10 border-b border-sand/10 pb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Mark className="mb-8 h-6 w-auto text-clay" />
-            <p className="max-w-[16ch] font-display text-[clamp(2.4rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.03em]" data-split>
+            <p lang="en" className="max-w-[16ch] font-display text-[clamp(2.4rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.03em]" data-split>
               {site.slogan}
             </p>
           </div>
@@ -92,13 +92,13 @@ export default function Footer({ lang }: { lang: Lang }) {
                 </Link>
               </li>
               <li className="pt-3 text-sm text-clay/50">
-                <Link href={href('home', 'tr')} hrefLang="tr" lang="tr" className="link-line hover:text-sand">
+                <a href={href('home', 'tr')} hrefLang="tr" lang="tr" className="link-line hover:text-sand">
                   Türkçe
-                </Link>
+                </a>
                 <span className="px-2">/</span>
-                <Link href={href('home', 'en')} hrefLang="en" lang="en" className="link-line hover:text-sand">
+                <a href={href('home', 'en')} hrefLang="en" lang="en" className="link-line hover:text-sand">
                   English
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
