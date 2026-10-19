@@ -12,6 +12,7 @@ export function pageMetadata({
   description,
   image,
   absoluteTitle = false,
+  share,
 }: {
   key: RouteKey
   lang: Lang
@@ -19,9 +20,12 @@ export function pageMetadata({
   description: L
   image: string
   absoluteTitle?: boolean
+  share?: { title: string; description: string }
 }): Metadata {
   const url = href(key, lang)
-  const ogImage = { url: `/og/${image}.jpg`, width: 1200, height: 630, alt: title[lang] }
+  const shareTitle = share?.title ?? title[lang]
+  const shareDescription = share?.description ?? description[lang]
+  const ogImage = { url: `/og/${image}.jpg`, width: 1200, height: 630, alt: shareTitle }
   return {
     title: absoluteTitle ? { absolute: title[lang] } : title[lang],
     description: description[lang],
@@ -35,11 +39,11 @@ export function pageMetadata({
       siteName: site.name,
       locale: lang === 'tr' ? 'tr_TR' : 'en_US',
       alternateLocale: lang === 'tr' ? ['en_US'] : ['tr_TR'],
-      title: title[lang],
-      description: description[lang],
+      title: shareTitle,
+      description: shareDescription,
       images: [ogImage],
     },
-    twitter: { card: 'summary_large_image', title: title[lang], description: description[lang], images: [ogImage.url] },
+    twitter: { card: 'summary_large_image', title: shareTitle, description: shareDescription, images: [ogImage.url] },
   }
 }
 

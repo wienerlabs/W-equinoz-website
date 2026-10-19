@@ -14,7 +14,15 @@ import { organizationLd, pageMetadata, websiteLd } from '@/lib/seo'
 
 export async function generateMetadata({ params }: PageProps<'/[lang]'>): Promise<Metadata> {
   const lang = (await params).lang as Lang
-  return pageMetadata({ key: 'home', lang, title: home.seo.title, description: home.seo.description, image: 'home', absoluteTitle: true })
+  return pageMetadata({
+    key: 'home',
+    lang,
+    title: home.seo.title,
+    description: home.seo.description,
+    image: 'home',
+    absoluteTitle: true,
+    share: home.seo.share,
+  })
 }
 
 export default async function HomePage({ params }: PageProps<'/[lang]'>) {

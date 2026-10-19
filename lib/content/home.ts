@@ -8,6 +8,11 @@ export const home = {
       tr: 'Equinoz LLC; family office, uluslararası yapılanma, servet planlaması, iş geliştirme, BAE’de şirket kuruluşu, muhasebe ve eğitim danışmanlığını Dubai’de tek çatı altında sunar.',
       en: 'Equinoz LLC brings family office, international structuring, wealth planning, business development, UAE company formation, accounting and education advisory under one roof in Dubai.',
     },
+    share: {
+      title: 'EQUINOZ Global | Private Client Advisory - Dubai',
+      description:
+        'Dubai-based private-client advisory firm guiding HNW and UHNW families toward secure, meaningful, and strategic establishment in the UAE and beyond.',
+    },
   },
   hero: {
     eyebrow: { tr: 'Equinoz LLC, Dubai', en: 'Equinoz LLC, Dubai' },
