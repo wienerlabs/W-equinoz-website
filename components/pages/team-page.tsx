@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Consult from '@/components/consult'
 import JsonLd from '@/components/json-ld'
 import LightHero from '@/components/light-hero'
+import Values from '@/components/values'
 import dusk from '@/assets/media/dusk-burj.jpg'
 import { home } from '@/lib/content/home'
 import { publishedTeam } from '@/lib/content/people'
@@ -91,6 +92,7 @@ export default function TeamPage({ lang }: { lang: Lang }) {
           </ul>
         </div>
       </section>
+      <Values lang={lang} />
       <Consult lang={lang} routeKey="team" />
     </>
   )

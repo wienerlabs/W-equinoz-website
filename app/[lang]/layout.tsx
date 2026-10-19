@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
-import { Cormorant_Garamond, Mukta_Mahee } from 'next/font/google'
+import { Cormorant_Garamond, Sora } from 'next/font/google'
 import Footer from '@/components/footer'
 import Header from '@/components/header'
 import Intro from '@/components/intro'
@@ -12,18 +12,18 @@ import { isLang, langs } from '@/lib/i18n'
 import { site } from '@/lib/site'
 import '../globals.css'
 
-const display = Cormorant_Garamond({
+const sora = Sora({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
-  style: ['normal', 'italic'],
-  variable: '--font-cormorant',
+  weight: ['200', '300', '400', '500', '600'],
+  variable: '--font-sora',
   display: 'swap',
 })
 
-const text = Mukta_Mahee({
+const serif = Cormorant_Garamond({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-mukta',
+  weight: ['300', '400'],
+  style: ['italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
@@ -51,7 +51,7 @@ export default async function LangLayout({ children, params }: LayoutProps<'/[la
   const { lang } = await params
   if (!isLang(lang)) notFound()
   return (
-    <html lang={lang} className={`${display.variable} ${text.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`${sora.variable} ${serif.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: boot }} />
       </head>
