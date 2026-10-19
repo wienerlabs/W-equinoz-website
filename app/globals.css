@@ -1,0 +1,223 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0e2725;
+  --color-night: #061211;
+  --color-terracotta: #b55d3b;
+  --color-ember: #f2a65a;
+  --color-sage: #9eb5a4;
+  --color-clay: #ded5d1;
+  --color-sand: #f6f1ec;
+  --color-teal: #008080;
+  --color-bronze: #a7713f;
+  --color-rose: #e9b7b0;
+
+  --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-sans: var(--font-mukta), 'Mukta Mahee', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-sand);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-terracotta);
+    color: var(--color-sand);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-ember);
+    outline-offset: 4px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+.js [data-split] {
+  visibility: hidden;
+}
+
+.js [data-clip] {
+  clip-path: inset(100% 0 0 0);
+}
+
+.js [data-draw] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.js .hero-title {
+  visibility: hidden;
+}
+
+.js .hero-fade {
+  opacity: 0;
+}
+
+.no-motion [data-reveal],
+.no-motion [data-split],
+.no-motion [data-clip],
+.no-motion .hero-title,
+.no-motion .hero-fade {
+  stroke-dashoffset: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-split],
+  .js [data-clip],
+  .js .hero-title,
+  .js .hero-fade,
+  .js [data-draw] {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    clip-path: none;
+  }
+}
+
+.split-line {
+  display: block;
+}
+
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+.intro {
+  animation: intro-safety 0.01s linear 7s forwards;
+}
+
+.intro-done .intro {
+  display: none;
+}
+
+@keyframes intro-safety {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.6s var(--ease-expo);
+}
+
+.link-line:hover,
+.link-line:focus-visible {
+  background-size: 100% 1px;
+}
+
+.field {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklab, currentColor 28%, transparent);
+  background: transparent;
+  padding: 0.85rem 0 0.75rem;
+  font-size: 1.0625rem;
+  color: inherit;
+  border-radius: 0;
+  transition: border-color 0.4s var(--ease-expo);
+  appearance: none;
+}
+
+.field:focus {
+  outline: none;
+  border-bottom-color: var(--color-ember);
+}
+
+.field::placeholder {
+  color: color-mix(in oklab, currentColor 38%, transparent);
+}
+
+select.field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23ded5d1' stroke-width='1.2'%3E%3Cpath d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.25rem center;
+  padding-right: 1.75rem;
+}
+
+select.field option,
+select.field optgroup {
+  color: #0e2725;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
